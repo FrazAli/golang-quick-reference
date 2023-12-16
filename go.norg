@@ -1,0 +1,107 @@
+@document.meta
+title: Go Programming Language
+description: A quick reference for Go programming language.
+authors: Fraz Ali <frazaliqureshi@gmail.com>
+categories:
+created: 2022-03-22
+version: 0.0.11
+@end
+
+= TOC
+
+* Tooling
+** Packages
+   - All code in go is organized in .go source files that can be grouped into packages. This is specified at the top of the source files e.g.
+   @code go
+   package main
+   @end
+   This indicates that this source file belongs to a package named 'main'.
+
+** Modules
+   - The go packages are organized in modules.
+   - The modules help manage dependencies and specify a global address to the module.
+   @code bash
+   go mod init github.com/user/repo/path/modname
+   @end
+   This command initializes a module by specifying the global address to the repository where the module source code will be hosted. The command generates a `go.mod` file in the current directory with module specification e.g.
+   @code text
+   module github.com/user/repo/path/modname
+
+   go 1.21.4
+   @end
+
+* Programming in Rust
+  Go is a compiled language.
+  You can send the executables to other persons and they can execute it without the need to have Go installed.
+
+** Hello world
+   Similar to C language, a Go program requires an entry point function named `main`.
+   @code go
+   import "fmt"
+
+   func main() {
+     fmt.Println("Hello World!");
+   }
+   @end
+
+* Syntax
+** Comments
+   You do comments with `//` at the beginning of a line. Multi-line comments are started with `/*` and ended with `*/`.
+
+** Variables
+   - Go is a statically typed language.
+   - Variables can be declared with `var` keyword.
+   - By convention variable names are `camelCase`.
+
+   @code go
+   var variableName = "value"
+   @end
+
+   - The type is optional and it is inferred from the value at *compile time* if an initial value is provided.
+   - A shorthand for declaring a variable is `:=`
+
+   @code go
+   variableName := "value"
+   @end
+
+   - Type *must* be specified if variable is declared without an initial value.
+   - Unlike most other programming languages, variable type is specified after the variable name.
+
+   @code go
+   var countItems int
+   @end
+
+** Constants
+   Similar to most other programming languages constants are declared with `const` keyword.
+   @code go
+   const pi = 3.14
+   @end
+
+** Pointers
+   - Similar to C/C++, you can declare pointers with `*` operator.
+   - Use address operator `&` to get the address of a variable.
+   @code go
+   variableName := "value"
+   var pointerToVariable *string = &variableName
+
+   fmt.Printf("value '%v' of type %T at address %v\n",
+     *pointerToVariable, *pointerToVariable, &variableName)
+   @end
+   - Unlike C/C++, pointer arithmetic is not allowed.
+
+** Printing
+   Print functions are part of the Go core package `fmt`. A package must be imported before any functions from it can be used. The print functions are similar to other programming languages, here are few examples:
+   @code go
+   import "fmt"
+
+   func main() {
+     x := 3
+     y := 5
+     // spaces are automatically added to parameters
+     fmt.Println("The sum of", x, "and", y, "is", x+y);
+     // Same output with a formatted print function
+     fmt.Printf("The sum of %v and %v is %v\n", x, y, x+y);
+     // Print the type of a variable
+     fmt.Printf("The type of variable x is %T\n", x);
+   }
+   @end
