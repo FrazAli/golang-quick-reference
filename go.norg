@@ -33,6 +33,13 @@ version: 0.0.11
    @end
    This indicates that this source file belongs to a package named 'main'.
 
+   - A package can be imported with `import` statement.
+   @code go
+   import "fmt"
+   @end
+*** Exported Names
+   - The name of all exported symbols in a package start with a *capital Letter* e.g. fmt.Printf
+
 ** Modules
    - The go packages are organized in modules.
    - The modules help manage dependencies and specify a global address to the module.
