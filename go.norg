@@ -47,6 +47,7 @@ version: 0.0.11
    @end
 
 * Syntax
+
 ** Comments
    You do comments with `//` at the beginning of a line. Multi-line comments are started with `/*` and ended with `*/`.
 
@@ -64,6 +65,7 @@ version: 0.0.11
 
    @code go
    variableName := "value"
+   a, b, d, _, s := 0, 1, 2.4, false, "Hello!"
    @end
 
    - Type *must* be specified if variable is declared without an initial value.
@@ -72,6 +74,10 @@ version: 0.0.11
    @code go
    var countItems int
    @end
+
+   Uninitialized variables are assigned zero automatically.
+
+   *Convention*: Use the shorthand (:=) variable declaration and assignment, the only exception is when no explicit value other than zero can be used to initialize the variable.
 
 ** Constants
    Similar to most other programming languages constants are declared with `const` keyword.
@@ -105,5 +111,9 @@ version: 0.0.11
      fmt.Printf("The sum of %v and %v is %v\n", x, y, x+y);
      // Print the type of a variable
      fmt.Printf("The type of variable x is %T\n", x);
+     // Raw string literals
+     fmt.Println(`This is \n raw string without
+       and is printed as it is`);
    }
    @end
+
