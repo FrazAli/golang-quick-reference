@@ -189,3 +189,27 @@ version: 0.0.11
     someSlice = new([100]int)[0:50]
     @end
 
+
+* Useful things
+** Local documentation
+   You can access documentation with `go doc` in the terminal.
+   @code bash
+   go doc fmt  # Display documentation of the 'fmt' package
+   @end
+   You can view the documentation of your current package with `go doc` in the package root directory.
+
+** Random number
+   The `math/rand` package can be used to generate random numbers.
+   For example you can generate a random number between 1 and 100:
+   @code go
+   package main
+
+   import (
+     "fmt"
+     "math/rand"
+   )
+
+   func main() {
+     fmt.Println("Random number (0 - 100): ", rand.Intn(100))
+   }
+   @end
