@@ -117,3 +117,75 @@ version: 0.0.11
    }
    @end
 
+* Primitive Types
+
+** Boolean:
+   @code text
+   bool
+   @end
+** Numeric:
+   @code text
+   uint8       unsigned  8-bit integers (0 to 255)
+   uint16      unsigned 16-bit integers (0 to 65535)
+   uint32      unsigned 32-bit integers (0 to 4294967295)
+   uint64      unsigned 64-bit integers (0 to 18446744073709551615)
+
+   int8        signed  8-bit integers (-128 to 127)
+   int16       signed 16-bit integers (-32768 to 32767)
+   int32       signed 32-bit integers (-2147483648 to 2147483647)
+   int64       signed 64-bit integers (-9223372036854775808 to 9223372036854775807)
+
+   float32     IEEE-754 32-bit floating-point numbers
+   float64     IEEE-754 64-bit floating-point numbers
+
+   complex64   complex numbers with float32 real and imaginary parts
+   complex128  complex numbers with float64 real and imaginary parts
+
+   byte        alias for uint8
+   rune        alias for int32, used to represent  a single unicode
+   @end
+   > "Explicit conversions are required when different numeric types are mixed in an expression or assignment. For instance, int32 and int are not the same type even though they may have the same size on a particular architecture."
+
+   Source: {https://go.dev/ref/spec#Numeric_types}[Go Reference: Numeric types]
+
+** Strings:
+   @code text
+   string
+   @end
+* Aggregate Types
+** Arrays (Fixed length)
+*** Syntax
+    @code text
+    ArrayType   = "[" ArrayLength "]" ElementType
+    ArrayLength = Expression
+    ElementType = Type
+    @end
+*** Examples
+    @code text
+    [32]byte
+    [2*N] struct { x, y int32 }
+    [1000]*float64
+    [3][5]int
+    [2][2][2]float64  // same as [2]([2]([2]float64))
+    @end
+
+** Slices (Dynamic length)
+*** Syntax
+    @code text
+    // Declaration
+    SliceType = "[" "]" ElementType
+
+    // Allocation
+    make([]T, length, capacity)
+    new([capacity]T)[0:length]
+    @end
+*** Examples
+   @code text
+    someSlice = []int
+
+    someSlice = make([]int, 50, 100)
+
+    // OR less commonly
+    someSlice = new([100]int)[0:50]
+    @end
+
