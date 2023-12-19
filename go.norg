@@ -203,6 +203,43 @@ version: 0.0.11
     someSlice = new([100]int)[0:50]
     @end
 
+** Functions
+
+*** Parameters
+    - Similar to {*** combined variable declaration}, parameter types can be combined *if the parameters share the same type*, in such a case, the type of the last parameter applies to parameters before it. Compare the two equivalent examples below.
+
+   @code go
+   // `int` type applies to both parameters
+   func add(a, b int) int {
+     reutrn a + b
+   }
+   // Same as above
+   func add(a int, b int) int {
+     reutrn a + b
+   }
+
+   @end
+
+*** Return values
+   - Functions can return multiple values:
+
+   @code go
+   func swap(x, y int) (int, int) {
+     return y, x
+   }
+   @end
+
+**** Named Returns
+
+    @code go
+    func split(sum int) (x, y int) {
+      x = sum * 4 / 9
+      y = sum - x
+      return
+    }
+    @end
+
+
 
 * Useful things
 ** Local documentation
