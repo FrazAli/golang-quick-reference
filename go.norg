@@ -68,7 +68,7 @@ version: 0.0.11
    @end
 
    - The type is optional and it is inferred from the value at *compile time* if an initial value is provided.
-   - A shorthand for declaring a variable is `:=`
+   - A shorthand for declaring a variable is `:=`, it cannot be used outside functions.
 
    @code go
    variableName := "value"
@@ -81,6 +81,13 @@ version: 0.0.11
    @code go
    var countItems int
    @end
+
+*** Combined variable declaration
+    - You can declare multiple variables in one line, type specification at the end applies to all preceding variables.
+
+   @code go
+   var a, b, c int
+    @end
 
    Uninitialized variables are assigned zero automatically.
 
