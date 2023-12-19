@@ -157,6 +157,20 @@ version: 0.0.11
 
     This last example exploits the implicit repetition of the last non-empty expression list.
 
+    @code go
+    type ByteSize int
+
+    const (
+      _           = iota // ignore first value by assigning to blank identifier
+      KB ByteSize = 1 << (10 * iota)
+      MB
+      GB
+      TB
+      PB
+      EB
+    )
+    @end
+
     Source: https://go.dev/ref/spec#Iota
 
 
