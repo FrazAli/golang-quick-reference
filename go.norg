@@ -162,6 +162,10 @@ version: 0.0.11
 
    Source: {https://go.dev/ref/spec#Numeric_types}[Go Reference: Numeric types]
 
+   The `int`, `uint`, and `uintptr` types are usually 32 bits wide on 32 bit systems and 64 bits wide on 64 bit systems.
+
+   *Convention*: Use `int` type unless there are specific reasons to use a signed or unsigned integer type.
+
 ** Strings:
    @code text
    string
