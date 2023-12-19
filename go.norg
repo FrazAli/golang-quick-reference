@@ -9,6 +9,22 @@ version: 0.0.11
 
 = TOC
 
+* Introduction
+  Go is a compiled language.
+  You can send the executables to other persons and they can execute it without the need to have Go installed.
+
+  Checkout {https://go.dev/tour/list}[A tour of Go]
+
+** Hello world
+   Similar to C language, a Go program requires an entry point function named `main`.
+   @code go
+   import "fmt"
+
+   func main() {
+     fmt.Println("Hello World!");
+   }
+   @end
+
 * Tooling
 ** Packages
    - All code in go is organized in .go source files that can be grouped into packages. This is specified at the top of the source files e.g.
@@ -28,20 +44,6 @@ version: 0.0.11
    module github.com/user/repo/path/modname
 
    go 1.21.4
-   @end
-
-* Programming in Rust
-  Go is a compiled language.
-  You can send the executables to other persons and they can execute it without the need to have Go installed.
-
-** Hello world
-   Similar to C language, a Go program requires an entry point function named `main`.
-   @code go
-   import "fmt"
-
-   func main() {
-     fmt.Println("Hello World!");
-   }
    @end
 
 * Syntax
