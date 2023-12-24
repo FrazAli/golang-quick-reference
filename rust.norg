@@ -1,355 +1,301 @@
 @document.meta
-title: Go Programming Language
-description: A quick reference for Go programming language.
-authors: Fraz Ali <frazaliqureshi@gmail.com>
-categories:
+title: rust
+description: 
+authors: max
+categories: 
 created: 2022-03-22
 version: 0.0.11
 @end
 
 = TOC
 
-* Introduction
-  Go is a compiled language.
-  You can send the executables to other persons and they can execute it without the need to have Go installed.
-
-  Checkout {https://go.dev/tour/list}[A tour of Go]
+* Programming in Rust
+  Rust is a compiled language.
+  You can send the executables to other persons and they can execute it without the need to have rust installed.
 
 ** Hello world
-   Similar to C language, a Go program requires an entry point function named `main`.
-   @code go
-   import "fmt"
-
-   func main() {
-     fmt.Println("Hello World!");
+   @code rust
+   fn main() {
+     println!("Hello World!");
    }
    @end
-
-* Tooling
-** Packages
-   - All code in go is organized in .go source files that can be grouped into packages. This is specified at the top of the source files e.g.
-   @code go
-   package main
-   @end
-   This indicates that this source file belongs to a package named 'main'.
-
-   - A package can be imported with `import` statement.
-   @code go
-   import "fmt"
-   @end
-*** Exported Names
-   - The name of all exported symbols in a package start with a *capital Letter* e.g. fmt.Printf
-
-** Modules
-   - The go packages are organized in modules.
-   - The modules help manage dependencies and specify a global address to the module.
-   @code bash
-   go mod init github.com/user/repo/path/modname
-   @end
-   This command initializes a module by specifying the global address to the repository where the module source code will be hosted. The command generates a `go.mod` file in the current directory with module specification e.g.
-   @code text
-   module github.com/user/repo/path/modname
-
-   go 1.21.4
-   @end
-
-** Build and Run
-   - Run a go program with `go run` command.
-
-   @code bash
-   go run main.go
-   @end
-
-   - Build a go program with `go build` command.
-
-   @code bash
-   go build main.go
-   @end
-
-   - Build for a specific platform with `GOOS=linux GOARCH=amd64 go build` command, e.g.
-
-   @code bash
-   GOOS=linux go build
-   @end
-
-   - Check Go environment variables
-
-   @code bash
-   go env
-   @end
-
-   - Go installs binaries in `GOPATH/bin`.
-
 
 * Syntax
+** General
+   At the end of every statement you have to put a semicolon `;`.
 
 ** Comments
-   You do comments with `//` at the beginning of a line. Multi-line comments are started with `/*` and ended with `*/`.
+   You do comments with `//` at the beginning of a line.
 
-** Variables
-   - Go is a statically typed language.
-   - Variables can be declared with `var` keyword.
-   - By convention variable names are `camelCase`.
+** Crates
+   Crates in Rust are like libraries in other programming languages.
+   They can are part of packages and contain modules.
+   Inside of the modules there are items which you can access.
+   You have to add external crates to your /cargo.toml/ file.
+   This can looks like this (example for `rand` crate): `rand = "0.8.3"`.
 
-   @code go
-   var variableName = "value"
+
+   There are two ways to use the items from a crate:
+   You can always access the crate and the module directly like this:
+   @code rust
+   crate::module::item();
+   crate::module::another_item();
    @end
 
-   - The type is optional and it is inferred from the value at *compile time* if an initial value is provided.
-   - A shorthand for declaring a variable is `:=`, it cannot be used outside functions.
+   You can also bring the module into the scope of the file and access items with the module only later on like this:
+   @code rust
+   use crate::module;
 
-   @code go
-   variableName := "value"
-   a, b, d, _, s := 0, 1, 2.4, false, "Hello!"
+   module::item();
+   module::another_item();
    @end
-
-   - Type *must* be specified if variable is declared without an initial value.
-   - Unlike most other programming languages, variable type is specified after the variable name.
-
-   @code go
-   var countItems int
-   @end
-
-   Uninitialized variables are assigned the {*** zero values} automatically.
-
-   *Convention*: Use the shorthand (:=) variable declaration and assignment, the only exception is when no explicit value other than zero can be used to initialize the variable.
-
-*** Combined variable declaration
-    - You can declare multiple variables in one line, type specification at the end applies to all preceding variables.
-
-    @code go
-    var a, b, c int
-    @end
-
-*** Zero values
-     - *`0, 0.0`* for Numeric types
-     - *`false`* for Boolean types
-     - *`""`* for String types
-     - *`nil`* for Reference types
-
-** Constants
-   Similar to most other programming languages constants are declared with `const` keyword.
-   @code go
-   const Pi float64 = 3.14159265358979323846
-   const zero = 0.0         // untyped floating-point constant
-   const (
-     size int64 = 1024
-     eof        = -1  // untyped integer constant
-   )
-   // untyped integer and string constants
-   const a, b, c = 3, 4, "foo"  // a = 3, b = 4, c = "foo",
-   const u, v float32 = 0, 3    // u = 0.0, v = 3.0
-   @end
-
-*** Iota
-
-    Iota is a "{https://go.dev/ref/spec#Iota}[constant generator]" used in `const` enumerations. Its value starts at zero and is incremented automatically for each const specification, see examples below:
-
-    @code go
-    const (
-      c0 = iota  // c0 == 0
-      c1 = iota  // c1 == 1
-      c2 = iota  // c2 == 2
-    )
-    @end
-
-    - iota only needs to be specifies in the first const specification.
-
-    @code go
-    const (
-      _ = iota   // iota = 0, ignored
-      a          // a == 1  (iota == 1, implicit)
-      b          // b == 2  (iota == 2, implicit)
-      c          // c == 3  (iota == 3, implicit)
-    )
-    @end
-
-    - `iota` is reset to zero for each new const statement and specification.
-
-    @code go
-    const x = iota  // x == 0
-    const y = iota  // y == 0
-    @end
-
-    - Multiple uses of iota in the same const specification have the same value:
-
-    @code go
-    const (
-      // bit0 == 1, mask0 == 0  (iota == 0)
-      bit0, mask0 = 1 << iota, 1 << iota - 1
-      bit1, mask1                  // bit1 == 2, mask1 == 1 (iota == 1)
-      _, _                         // unused                (iota == 2)
-      bit3, mask3                  // bit3 == 8, mask3 == 7 (iota == 3)
-    )
-    @end
-
-    This last example exploits the implicit repetition of the last non-empty expression list.
-
-    @code go
-    type ByteSize int
-
-    const (
-      _           = iota // ignore first value by assigning to blank identifier
-      KB ByteSize = 1 << (10 * iota)
-      MB
-      GB
-      TB
-      PB
-      EB
-    )
-    @end
-
-    Source: https://go.dev/ref/spec#Iota
-
-
-** Pointers
-   - Similar to C/C++, you can declare pointers with `*` operator.
-   - Use address operator `&` to get the address of a variable.
-   @code go
-   variableName := "value"
-   var pointerToVariable *string = &variableName
-
-   fmt.Printf("value '%v' of type %T at address %v\n",
-     *pointerToVariable, *pointerToVariable, &variableName)
-   @end
-   - Unlike C/C++, pointer arithmetic is not allowed.
 
 ** Printing
-   Print functions are part of the Go core package `fmt`. A package must be imported before any functions from it can be used. The print functions are similar to other programming languages, here are few examples:
-   @code go
-   import "fmt"
+   You can use the `println` macro to output text (see {# Hello World}[hello world]).
 
-   func main() {
-     x := 3
-     y := 5
-     // spaces are automatically added to parameters
-     fmt.Println("The sum of", x, "and", y, "is", x+y);
-     // Same output with a formatted print function
-     fmt.Printf("The sum of %v and %v is %v\n", x, y, x+y);
-     // Print the type of a variable
-     fmt.Printf("The type of variable x is %T\n", x);
-     // Raw string literals
-     fmt.Println(`This is \n raw string without
-       and is printed as it is`);
-   }
-   @end
+*** Placeholders
+    You can use the `{}` placeholder to put things into output strings.
+    > Think of `{}` as little crab pincers that hold a value in place.
+    All the arguments after the output string will be placed where the placeholders are:
+    @code rust
+    let x = 5;
+    let y = 10;
 
-* Primitive Types
-
-** Boolean:
-   @code text
-   bool
-   @end
-** Numeric:
-   @code text
-   uint8       unsigned  8-bit integers (0 to 255)
-   uint16      unsigned 16-bit integers (0 to 65535)
-   uint32      unsigned 32-bit integers (0 to 4294967295)
-   uint64      unsigned 64-bit integers (0 to 18446744073709551615)
-
-   int8        signed  8-bit integers (-128 to 127)
-   int16       signed 16-bit integers (-32768 to 32767)
-   int32       signed 32-bit integers (-2147483648 to 2147483647)
-   int64       signed 64-bit integers (-9223372036854775808 to 9223372036854775807)
-
-   float32     IEEE-754 32-bit floating-point numbers
-   float64     IEEE-754 64-bit floating-point numbers
-
-   complex64   complex numbers with float32 real and imaginary parts
-   complex128  complex numbers with float64 real and imaginary parts
-
-   byte        alias for uint8
-   rune        alias for int32, used to represent  a single unicode
-   @end
-   > "Explicit conversions are required when different numeric types are mixed in an expression or assignment. For instance, int32 and int are not the same type even though they may have the same size on a particular architecture."
-
-   Source: {https://go.dev/ref/spec#Numeric_types}[Go Reference: Numeric types]
-
-   The `int`, `uint`, and `uintptr` types are usually 32 bits wide on 32 bit systems and 64 bits wide on 64 bit systems.
-
-   *Convention*: Use `int` type unless there are specific reasons to use a signed or unsigned integer type.
-
-** Strings:
-   @code text
-   string
-   @end
-* Aggregate Types
-** Arrays (Fixed length)
-*** Syntax
-    @code text
-    ArrayType   = "[" ArrayLength "]" ElementType
-    ArrayLength = Expression
-    ElementType = Type
-    @end
-*** Examples
-    @code text
-    [32]byte
-    [2*N] struct { x, y int32 }
-    [1000]*float64
-    [3][5]int
-    [2][2][2]float64  // same as [2]([2]([2]float64))
+    println!("x = {} and y = {}", x, y); // output: x = 5 and y = 10
     @end
 
-** Slices (Dynamic length)
-*** Syntax
-    @code text
-    // Declaration
-    SliceType = "[" "]" ElementType
+** Variables
+   You create variables with `let` for example like this:
+   @code rust
+   let apples = 5;
+   @end
 
-    // Allocation
-    make([]T, length, capacity)
-    new([capacity]T)[0:length]
+   Most types have a module where you can call functions to do things. For example {# Strings}[String].
+   The most of these modules have a `new()` function to create a new variable for that type.
+
+*** Mutability
+    By default variables are immutable.
+    You can make a variable mutable by putting `mut` before it's name.
+
+    Immutable variables can't be changed after they've been given a value.
+    If you try to change the value of an immutable variable you get an error like this:
+    `cannot assign twice to immutable variable`.
+
+*** Constants
+    Constants are a special type of immutable variables.
+    You create them with the `const` keyword instead of `let`.
+    You always have to annotate the type.
+    The value of a constant can only be a constant value, not one that get calculated at runtime.
+    That means it can't be the value of another variable. But it can be another constant.
+    You should name constant with all uppercase letters and underscores between words.
+
+    @code rust
+    let x = 6;
+    // const MY_CONSTANT = x; // would be invalid
+    const MY_CONSTANT: u32 = 6;
+    const ANOTHER_CONSTANT: u8 = MY_CONSTANT;
     @end
-*** Examples
-   @code text
-    someSlice = []int
 
-    someSlice = make([]int, 50, 100)
+*** Shadowing
+    If you use `let` again with an already existing (immutable) variable you'll overwrite it.
+    With that you "shadow the existing variable".
 
-    // OR less commonly
-    someSlice = new([100]int)[0:50]
-    @end
+**** Differences to mutable variables
+     With shadowing you can change the data type of a variable. If you assign a different type to a mutable variable you get an error.
+     After changing a variable with shadowing it's immutable again.
+     ---
+    This is useful so you don't have to come up with that many variable names.
+    For example if you get a user input it is a string.
+    If you want to get it as a number you'd have to create a new variable if you wouldn't use shadowing.
+    That would require you to create e.g. `input_str` and `input_num`.
+    With shadowing you can just create one variable `input`.
 
-** Structs
+**** Scope
+     If you shadow a variable it's only shadowed in the current scope.
+     If you leave the scope it will have the variable before you shadowed it again.
+     @code rust
+     let x = 5;
+     let x = x + 1;
+     {
+       let x = x * 2;
+       println!("The value of x in the inner scope is: {}", x); // x is 12
+     }
+     println!("The value of x is: {}", x); // x is 6 again
+     @end
+
+
+** Data Types
+   Rust always needs to know the type of variables.
+   In many cases it can get it based on the value.
+   When multiple types are possible (e.g. when converting a string to a numeric type with `parse`) you need to annotate the type like this:
+   @code rust
+   let input: u32 = "42".parse().expect("Not a number!");
+   @end
+
+   The compound and the scalar types following here can be stored on the stack because they have a fixed size.
+
+*** Scalar Types
+    Scalar types represent single values.
+    There are for types.
+**** Integer Types
+     You can have unsigned and signed integer types.
+     @table
+     Length | Signed | Unsigned
+     -
+     8-bit | i8 | u8
+     -
+     16-bit | i16 | u16
+     -
+     32-bit | i32 | u32
+     -
+     64-bit | i64 | u64
+     -
+     128-bit | i128 | u128
+     -
+     arch | isize | usize
+     -
+     @end
+     Signed types can be negative.
+     Unsigned $n$-bit types can store values from $0$ to $2^n-1$.
+     Signed $n$-bit types can store values from $-2^{n-1}$ to $2^{n-1}-1$.
+
+     The `arch` types have an amount of bits depending on your architecture.
+     This is 32 for 32-bit architectures and 64 for 64-bit architectures.
+
+***** Annotate type
+      You can annotate the type of the variable like this:
+      @code rust
+      let x: u32 = 5;
+      @end
+      You can also put the type at the end of the string literal:
+      @code rust
+      let x = 5u32;
+      @end
+
+***** Integer Literals
+      For hex, octal and binary values you can prefix the value with `0x`, `0o` and `0b`.
+      You can also put `_` anywhere in your integer literals to make them more readable.
+
+***** Integer Overflow
+      If you assign a value to a variable too big for the type of the variable (e.g. 256 to an `u8`) it will overflow.
+      If you compile this in debug mode the compiler panics.
+      But if you build with the `--release` flag there will be no error.
+      The bit at the front will just be ignored: 256 ->  0, 257 -> 1.
+
+**** Floating-Point Types
+     There are two floating-point types.
+     They are `f32` and `f64` which are 32 and 64 bits big.
+     You should use `f64` in most cases because it has nearly the same speed on modern computer but is more precise.
+     See also how to {# Annotate type}[annotate the type] and how {# integer literals}[literals] can look like.
+
+**** Numeric Operations 
+     Rust supports all the standard operations.
+     It's important to notice that integer division always rounds down to the nearest integer.
+
+**** Booleans
+     The type for booleans is `bool`.
+     They can either be `true` or `false`.
+
+**** Characters
+     Characters are specified with single quotes unlike strings which use double quotes.
+     They are 4 bytes big and represent an unicode value.
+
+*** Compound types
+    Compound types group multiple values into one type.
+
+**** Tuples
+     Tuples can group values of different types together.
+     Their length can't be changed. They can't grow or shrink.
+     You create tuples by putting a comma separated list inside parentheses.
+     You can annotate types by putting them inside a tuple:
+     @code rust
+     let tup: (i32, f64, u8) = (500, 6.4, 1);
+     @end
+
+***** Access values
+      You can access values inside tuples with so called patterns.
+      This looks like this:
+      @code rust
+      let tup: (i32, f64, u8) = (500, 6.4, 1);
+      let (x, y, z) = tup;
+      println!("The value of the second element is {}", y);
+      @end
+      This is called *destructuring*.
+
+      You can also access values by using `.` and the index of the value.
+      *Indexing is 0-based*
+
+      @code rust
+      let tup = (3,37,12);
+      let second = tup.1;
+      println!("The second value is {}", second);
+      @end
+
+***** Unit Value
+      There is also `()` which is a special tuple.
+      It's an empty value, like `void` in c. It's called /unit value/.
+      Functions without a return value get interpreted as functions with return value `()`.
+
+**** Arrays
+     An array groups together multiple values of the *same type*.
+     They also have a fixed length.
+     Arrays are constructed with a comma separated list of values inside `[]`.
+     You can annotate the type of the elements inside the array with a square bracket in which you write the type and the amount of elements inside the array separated with a semicolon like this:
+     @code rust
+     let arr: [u32; 3] = [1,2,3];
+     @end
+
+     You can also initialize an array by providing a default value and a length for the array inside `[]` separated with a semicolon:
+     @code rust
+     let arr = [3;4];
+     // this does exactly the same
+     let arr = [3,3,3,3];
+     @end
+
+***** Access Values
+      You can access a value of an array by putting it's index inside `[]` after the arrays name:
+      @code rust
+      let arr = [1,2,3,4];
+      let second=arr[1]; // second is now 2
+      @end
+
+***** Invalid Index
+      If you try to access an index out of range you'll get an error.
+      Unlike in other languages you can't access memory outside of the array.
 
 ** Functions
+   You define functions in rust with the `fn` keyword, the function name followed by `()` and curly braces to define the scope of the function.
+   Functions can be defined everywhere in the code. It doesn't matter if it's before or after where they're called.
 
-*** Parameters
-    - Similar to {*** combined variable declaration}, parameter types can be combined *if the parameters share the same type*, in such a case, the type of the last parameter applies to parameters before it. Compare the two equivalent examples below.
+*** Statements
+    Statements are pieces of code that don't return a value.
+    They *have a semicolon* at the end of them.
 
-   @code go
-   // `int` type applies to both parameters
-   func add(a, b int) int {
-     reutrn a + b
-   }
-   // Same as above
-   func add(a int, b int) int {
-     reutrn a + b
-   }
-
-   @end
-
-*** Return values
-   - Functions can return multiple values:
-
-   @code go
-   func swap(x, y int) (int, int) {
-     return y, x
-   }
-   @end
-
-**** Named Returns
-
-    @code go
-    func split(sum int) (x, y int) {
-      x = sum * 4 / 9
-      y = sum - x
-      return
+*** Expressions
+    Expressions do return a value.
+    They *don't have semicolons*.
+    ---
+*** Return Values
+    If there is an expression at the end of the function the result of it will be returned.
+    You can also return something earlier (and stop the execution of the function) with the `return` keyword.
+    If your function returns something you have to annotate the value with an arrow after the function name like this:
+    @code rust
+    fn my_function() -> u32 {
+      3*5
     }
     @end
 
-
-     /************************************************************/
+*** Parameters
+    You can pass values to functions with parameters.
+    You specify the parameters *and the type* inside the `()` after the function name.
+    You can then later use the values inside the function:
+    @code rust
+    fn adder(x:u32, y:u32) -> u32 {
+      x+y
+    }
+    let x = adder(3,5);
+    println!("3 and 5 added equals {}",x);
+    @end
 
 ** If/Else Statements
    You create if statements with the `if` keyword followed by a condition and `{}`.
@@ -1216,7 +1162,7 @@ version: 0.0.11
     @code rust
     let v: Vec<i32> = Vec::new();
     @end
-    In this case you need to add a type annotation because you don't insert any values into the vector.
+    In this case you need to add a type annotation because you don't insert any values into the vector. 
 
     You can also create a vector with initial values.
     You do that with the `vec!` macro:
@@ -1286,10 +1232,10 @@ version: 0.0.11
       |
     4 |     let first = &v[0];
       |                  - immutable borrow occurs here
-    5 |
+    5 | 
     6 |     v.push(6);
       |     ^^^^^^^^^ mutable borrow occurs here
-    7 |
+    7 | 
     8 |     println!("The first element is: {}", first);
       |                                          ----- immutable borrow later used here
     @end
@@ -1610,27 +1556,18 @@ version: 0.0.11
 
 * Useful things
 ** Local documentation
-   You can access documentation with `go doc` in the terminal.
-   @code bash
-   go doc fmt  # Display documentation of the 'fmt' package
-   @end
-   You can view the documentation of your current package with `go doc` in the package root directory.
+   You can access documentation with `rustup doc` in the terminal.
+   The Rust book is accessible with `rustup doc --book`.
+   You can view the documentation of your current project with `cargo doc --open`.
 
 ** Random number
-   The `math/rand` package can be used to generate random numbers.
-   For example you can generate a random number between 1 and 100:
-   @code go
-   package main
-
-   import (
-     "fmt"
-     "math/rand"
-   )
-
-   func main() {
-     fmt.Println("Random number (0 - 99): ", rand.Intn(100))
-   }
+   You can generate random numbers with the `rand` crate.
+   The code to get a random number from 1 (inclusive) to 101 (exclusive) looks like this:
+   @code rust
+   use rand::Rng;
+   let number = rand::thread_rng().gen_range(1..101);
    @end
+
 * Crates and Modules
   You can find crates on {https://crates.io/crates/rand}[crates.io]
 ** Std
