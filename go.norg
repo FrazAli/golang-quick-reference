@@ -37,6 +37,48 @@ version: 0.0.11
    @end
    Read More: {https://go.dev/doc/effective_go#init}
 
+
+* Concurrency
+** Goroutines
+   - A `goroutine` is a lightweight thread.
+   - A `goroutine` can be started with `go` keyword.
+   @code go
+   // Example 1
+   go func() {
+     fmt.Println("Hello World! from goroutine");
+   }()
+
+   // Example 2
+   go list.Sort()  // run list.Sort concurrently; don't wait for it.
+  @end
+
+** Channels
+   - Channels are a way to communicate between goroutines.
+   - Like maps, channels are created with `make` keyword.
+   @code go
+   // unbuffered channel of integers, default size zero
+   ci := make(chan int)
+   // unbuffered channel of integers, explicit size set to zero
+   cj := make(chan int, 0)
+   // buffered channel of pointers to Files
+   cs := make(chan *os.File, 100)
+   @end
+*** Examples
+    - Signal using a channel
+    @code go
+    c := make(chan int)  // Allocate a channel.
+    // Start the sort in a goroutine; when it completes, signal on the channel.
+    go func() {
+      list.Sort()
+      c <- 1  // Send a signal; value does not matter.
+    }()
+    doSomethingForAWhile()
+    <-c   // Wait for sort to finish; discard sent value.
+    @end
+
+  Read More: {https://go.dev/doc/effective_go#concurrency}
+
+
 * Tooling
 ** Packages
    - All code in go is organized in .go source files that can be grouped into packages. This is specified at the top of the source files e.g.
