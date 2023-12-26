@@ -384,6 +384,15 @@ version: 0.0.11
    map[KeyType]ValueType
    @end
 
+** Structs
+   - Structs are a collection of values of different types.
+   - Structs are created with `make` keyword.
+   @code text
+   struct {
+     name string
+     age int
+   }
+   @end
 
 * Operators
 ** Logical Operators
