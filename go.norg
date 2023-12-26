@@ -335,6 +335,9 @@ version: 0.0.11
    @end
 * Aggregate Types
 ** Arrays (Fixed length)
+   - Arrays are fixed sized and are not commonly used in Go.
+   - More commonly {** slices} (dynamically sized) are preferred for storing elements of the same type.
+
 *** Syntax
     @code text
     ArrayType   = "[" ArrayLength "]" ElementType
@@ -351,6 +354,9 @@ version: 0.0.11
     @end
 
 ** Slices (Dynamic length)
+   - Slices are built on top of arrays but are dynamically sized.
+   - Slices have a length (elements in the slice) and a capacity (elements in the underlying array). Read More: {https://go.dev/blog/slices-intro}
+
 *** Syntax
     @code text
     // Declaration
