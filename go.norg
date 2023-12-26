@@ -26,6 +26,16 @@ version: 0.0.11
      fmt.Println("Hello World!");
    }
    @end
+** The 'init' function
+   The `init` function in Go allows to run code before the `main()` function.
+   @code go
+   import "fmt"
+
+   func init() {
+     fmt.Println("init is called before main!");
+   }
+   @end
+   Read More: {https://go.dev/doc/effective_go#init}
 
 * Tooling
 ** Packages
