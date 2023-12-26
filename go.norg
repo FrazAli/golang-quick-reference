@@ -411,6 +411,19 @@ version: 0.0.11
     default:
       fmt.Println("other")
     }
+
+    switch {
+    case x < 42:
+      fmt.Println("less than 42")
+    case x == 42:
+      fmt.Println("42")
+    case x > 42:
+      fmt.Println("greater than 42")
+    default:
+      fmt.Println("other")
+    }
+    @end
+
    @end
 ** Structs
 
