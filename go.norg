@@ -337,6 +337,40 @@ version: 0.0.11
    !     NOT                !p      is  "not p"
    @end
 
+* Control Flow
+** Conditionals
+*** If
+    @code go
+    if true {
+      fmt.Println("true")
+    } else if false {
+      fmt.Println("false")
+    } else {
+      fmt.Println("Not true or false")
+    }
+    @end
+
+*** if with inline statements
+    @code go
+    if i := 0; i < 5 {
+      fmt.Println("less than 5")
+    }
+   @end
+
+*** Switch
+
+    `fallthrough` is used to execute the next case if the current one matches. The example below prints both "zero" and "one".
+    @code go
+    switch i := 0; i {
+    case 0:
+      fmt.Println("zero")
+      fallthrough
+    case 1:
+      fmt.Println("one")
+    default:
+      fmt.Println("other")
+    }
+   @end
 ** Structs
 
 ** Functions
