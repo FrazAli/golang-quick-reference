@@ -329,6 +329,14 @@ version: 0.0.11
     someSlice = new([100]int)[0:50]
     @end
 
+* Operators
+** Logical Operators
+   @code text
+   &&    conditional AND    p && q  is  "if p then q else false"
+   ||    conditional OR     p || q  is  "if p then true else q"
+   !     NOT                !p      is  "not p"
+   @end
+
 ** Structs
 
 ** Functions
