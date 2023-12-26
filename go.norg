@@ -37,6 +37,14 @@ version: 0.0.11
    @code go
    import "fmt"
    @end
+
+   - Import external packages as dependencies with `go get` command.
+   @code bash
+   go get github.com/user/repo/path/package@latest
+   @end
+
+   - User `go mod tidy` to cleanup up the dependencies.
+
 *** Exported Names
    - The name of all exported symbols in a package start with a *capital Letter* e.g. fmt.Printf
 
