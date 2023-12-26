@@ -101,7 +101,6 @@ version: 0.0.11
    - Go installs binaries in `GOPATH/bin`.
 
 
-* Syntax
 * Comments
   You do comments with `//` at the beginning of a line. Multi-line comments are started with `/*` and ended with `*/`.
 
@@ -1679,7 +1678,7 @@ version: 0.0.11
 
 ** Random number
    The `math/rand` package can be used to generate random numbers.
-   For example you can generate a random number between 1 and 100:
+   For example you can generate a pseudo random number between 1 and 100:
    @code go
    package main
 
