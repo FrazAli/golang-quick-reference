@@ -375,6 +375,15 @@ version: 0.0.11
     // OR less commonly
     someSlice = new([100]int)[0:50]
     @end
+** maps
+   - Maps are a collection of key-value pairs.
+   - Keys are unique and values are of the same type.
+   - Maps are unordered.
+   - Maps are created with `make` keyword.
+   @code text
+   map[KeyType]ValueType
+   @end
+
 
 * Operators
 ** Logical Operators
