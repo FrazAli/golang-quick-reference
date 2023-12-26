@@ -102,157 +102,156 @@ version: 0.0.11
 
 
 * Syntax
+* Comments
+  You do comments with `//` at the beginning of a line. Multi-line comments are started with `/*` and ended with `*/`.
 
-** Comments
-   You do comments with `//` at the beginning of a line. Multi-line comments are started with `/*` and ended with `*/`.
+* Variables
+  - Go is a statically typed language.
+  - Variables can be declared with `var` keyword.
+  - By convention variable names are `camelCase`.
 
-** Variables
-   - Go is a statically typed language.
-   - Variables can be declared with `var` keyword.
-   - By convention variable names are `camelCase`.
+  @code go
+  var variableName = "value"
+  @end
+
+  - The type is optional and it is inferred from the value at *compile time* if an initial value is provided.
+  - A shorthand for declaring a variable is `:=`, it cannot be used outside functions.
+
+  @code go
+  variableName := "value"
+  a, b, d, _, s := 0, 1, 2.4, false, "Hello!"
+  @end
+
+  - Type *must* be specified if variable is declared without an initial value.
+  - Unlike most other programming languages, variable type is specified after the variable name.
+
+  @code go
+  var countItems int
+  @end
+
+  Uninitialized variables are assigned the {*** zero values} automatically.
+
+  *Convention*: Use the shorthand (:=) variable declaration and assignment, the only exception is when no explicit value other than zero can be used to initialize the variable.
+
+** Combined variable declaration
+   - You can declare multiple variables in one line, type specification at the end applies to all preceding variables.
 
    @code go
-   var variableName = "value"
+   var a, b, c int
    @end
 
-   - The type is optional and it is inferred from the value at *compile time* if an initial value is provided.
-   - A shorthand for declaring a variable is `:=`, it cannot be used outside functions.
+** Zero values
+   - *`0, 0.0`* for Numeric types
+   - *`false`* for Boolean types
+   - *`""`* for String types
+   - *`nil`* for Reference types
+
+* Constants
+  Similar to most other programming languages constants are declared with `const` keyword.
+  @code go
+  const Pi float64 = 3.14159265358979323846
+  const zero = 0.0         // untyped floating-point constant
+  const (
+    size int64 = 1024
+    eof        = -1  // untyped integer constant
+  )
+  // untyped integer and string constants
+  const a, b, c = 3, 4, "foo"  // a = 3, b = 4, c = "foo",
+  const u, v float32 = 0, 3    // u = 0.0, v = 3.0
+  @end
+
+** Iota
+
+   Iota is a "{https://go.dev/ref/spec#Iota}[constant generator]" used in `const` enumerations. Its value starts at zero and is incremented automatically for each const specification, see examples below:
 
    @code go
-   variableName := "value"
-   a, b, d, _, s := 0, 1, 2.4, false, "Hello!"
-   @end
-
-   - Type *must* be specified if variable is declared without an initial value.
-   - Unlike most other programming languages, variable type is specified after the variable name.
-
-   @code go
-   var countItems int
-   @end
-
-   Uninitialized variables are assigned the {*** zero values} automatically.
-
-   *Convention*: Use the shorthand (:=) variable declaration and assignment, the only exception is when no explicit value other than zero can be used to initialize the variable.
-
-*** Combined variable declaration
-    - You can declare multiple variables in one line, type specification at the end applies to all preceding variables.
-
-    @code go
-    var a, b, c int
-    @end
-
-*** Zero values
-     - *`0, 0.0`* for Numeric types
-     - *`false`* for Boolean types
-     - *`""`* for String types
-     - *`nil`* for Reference types
-
-** Constants
-   Similar to most other programming languages constants are declared with `const` keyword.
-   @code go
-   const Pi float64 = 3.14159265358979323846
-   const zero = 0.0         // untyped floating-point constant
    const (
-     size int64 = 1024
-     eof        = -1  // untyped integer constant
+     c0 = iota  // c0 == 0
+     c1 = iota  // c1 == 1
+     c2 = iota  // c2 == 2
    )
-   // untyped integer and string constants
-   const a, b, c = 3, 4, "foo"  // a = 3, b = 4, c = "foo",
-   const u, v float32 = 0, 3    // u = 0.0, v = 3.0
    @end
 
-*** Iota
+   - iota only needs to be specifies in the first const specification.
 
-    Iota is a "{https://go.dev/ref/spec#Iota}[constant generator]" used in `const` enumerations. Its value starts at zero and is incremented automatically for each const specification, see examples below:
-
-    @code go
-    const (
-      c0 = iota  // c0 == 0
-      c1 = iota  // c1 == 1
-      c2 = iota  // c2 == 2
-    )
-    @end
-
-    - iota only needs to be specifies in the first const specification.
-
-    @code go
-    const (
-      _ = iota   // iota = 0, ignored
-      a          // a == 1  (iota == 1, implicit)
-      b          // b == 2  (iota == 2, implicit)
-      c          // c == 3  (iota == 3, implicit)
-    )
-    @end
-
-    - `iota` is reset to zero for each new const statement and specification.
-
-    @code go
-    const x = iota  // x == 0
-    const y = iota  // y == 0
-    @end
-
-    - Multiple uses of iota in the same const specification have the same value:
-
-    @code go
-    const (
-      // bit0 == 1, mask0 == 0  (iota == 0)
-      bit0, mask0 = 1 << iota, 1 << iota - 1
-      bit1, mask1                  // bit1 == 2, mask1 == 1 (iota == 1)
-      _, _                         // unused                (iota == 2)
-      bit3, mask3                  // bit3 == 8, mask3 == 7 (iota == 3)
-    )
-    @end
-
-    This last example exploits the implicit repetition of the last non-empty expression list.
-
-    @code go
-    type ByteSize int
-
-    const (
-      _           = iota // ignore first value by assigning to blank identifier
-      KB ByteSize = 1 << (10 * iota)
-      MB
-      GB
-      TB
-      PB
-      EB
-    )
-    @end
-
-    Source: https://go.dev/ref/spec#Iota
-
-
-** Pointers
-   - Similar to C/C++, you can declare pointers with `*` operator.
-   - Use address operator `&` to get the address of a variable.
    @code go
-   variableName := "value"
-   var pointerToVariable *string = &variableName
-
-   fmt.Printf("value '%v' of type %T at address %v\n",
-     *pointerToVariable, *pointerToVariable, &variableName)
+   const (
+     _ = iota   // iota = 0, ignored
+     a          // a == 1  (iota == 1, implicit)
+     b          // b == 2  (iota == 2, implicit)
+     c          // c == 3  (iota == 3, implicit)
+   )
    @end
-   - Unlike C/C++, pointer arithmetic is not allowed.
 
-** Printing
-   Print functions are part of the Go core package `fmt`. A package must be imported before any functions from it can be used. The print functions are similar to other programming languages, here are few examples:
+   - `iota` is reset to zero for each new const statement and specification.
+
    @code go
-   import "fmt"
-
-   func main() {
-     x := 3
-     y := 5
-     // spaces are automatically added to parameters
-     fmt.Println("The sum of", x, "and", y, "is", x+y);
-     // Same output with a formatted print function
-     fmt.Printf("The sum of %v and %v is %v\n", x, y, x+y);
-     // Print the type of a variable
-     fmt.Printf("The type of variable x is %T\n", x);
-     // Raw string literals
-     fmt.Println(`This is \n raw string without
-       and is printed as it is`);
-   }
+   const x = iota  // x == 0
+   const y = iota  // y == 0
    @end
+
+   - Multiple uses of iota in the same const specification have the same value:
+
+   @code go
+   const (
+     // bit0 == 1, mask0 == 0  (iota == 0)
+     bit0, mask0 = 1 << iota, 1 << iota - 1
+     bit1, mask1                  // bit1 == 2, mask1 == 1 (iota == 1)
+     _, _                         // unused                (iota == 2)
+     bit3, mask3                  // bit3 == 8, mask3 == 7 (iota == 3)
+   )
+   @end
+
+   This last example exploits the implicit repetition of the last non-empty expression list.
+
+   @code go
+   type ByteSize int
+
+   const (
+     _           = iota // ignore first value by assigning to blank identifier
+     KB ByteSize = 1 << (10 * iota)
+     MB
+     GB
+     TB
+     PB
+     EB
+   )
+   @end
+
+   Source: https://go.dev/ref/spec#Iota
+
+
+* Pointers
+  - Similar to C/C++, you can declare pointers with `*` operator.
+  - Use address operator `&` to get the address of a variable.
+  @code go
+  variableName := "value"
+  var pointerToVariable *string = &variableName
+
+  fmt.Printf("value '%v' of type %T at address %v\n",
+    *pointerToVariable, *pointerToVariable, &variableName)
+  @end
+  - Unlike C/C++, pointer arithmetic is not allowed.
+
+* Printing
+  Print functions are part of the Go core package `fmt`. A package must be imported before any functions from it can be used. The print functions are similar to other programming languages, here are few examples:
+  @code go
+  import "fmt"
+
+  func main() {
+    x := 3
+    y := 5
+    // spaces are automatically added to parameters
+    fmt.Println("The sum of", x, "and", y, "is", x+y);
+    // Same output with a formatted print function
+    fmt.Printf("The sum of %v and %v is %v\n", x, y, x+y);
+    // Print the type of a variable
+    fmt.Printf("The type of variable x is %T\n", x);
+    // Raw string literals
+    fmt.Println(`This is \n raw string without
+      and is printed as it is`);
+  }
+  @end
 
 * Primitive Types
 
@@ -321,7 +320,7 @@ version: 0.0.11
     new([capacity]T)[0:length]
     @end
 *** Examples
-   @code text
+    @code text
     someSlice = []int
 
     someSlice = make([]int, 50, 100)
