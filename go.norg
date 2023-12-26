@@ -424,7 +424,31 @@ version: 0.0.11
     }
     @end
 
+** Loops
+   Unlike most other languages, in go `for` keyword is used for all types of loops.
+   @code go
+   // Like a C for
+    for i := 0; i < 5; i++ {
+      fmt.Println(i)
+    }
+
+    // Like a C while
+    for true { }
+
+   // Like a C for(;;) - use 'break' to exit
+    for { }
+
+    // range loop
+    for key, value := range myMap {
+      fmt.Println(key, value)
+    }
+
+    // multi-variable for loop - Reverse 'a'
+    for i, j := 0, len(a)-1; i < j; i, j = i+1, j-1 {
+      a[i], a[j] = a[j], a[i]
+    }
    @end
+
 ** Structs
 
 ** Functions
