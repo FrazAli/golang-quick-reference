@@ -351,6 +351,9 @@ version: 0.0.11
     [1000]*float64
     [3][5]int
     [2][2][2]float64  // same as [2]([2]([2]float64))
+
+    // use initialized values to set the array size
+    names := [...]string{"John", "Jonas", "Martin"}
     @end
 
 ** Slices (Dynamic length)
@@ -374,6 +377,9 @@ version: 0.0.11
 
     // OR less commonly
     someSlice = new([100]int)[0:50]
+
+    // slice with initial values
+    names := []string{"John", "Jonas", "Martin"}
     @end
 ** maps
    - Maps are a collection of key-value pairs.
