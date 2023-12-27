@@ -373,6 +373,7 @@ version: 0.0.11
     make([]T, length, capacity)
     new([capacity]T)[0:length]
     @end
+
 *** Examples
     @code go
     someSlice = []int
@@ -407,11 +408,28 @@ version: 0.0.11
    - Maps are a collection of key-value pairs.
    - Keys are unique and values are of the same type.
    - Maps are unordered.
-   - Maps are created with `make` keyword.
-   @code text
+   - Maps can also be created with `make` keyword.
+   - Use `delete` builtin function to delete elements from the map
+   - Map returns zero-value instead of an error if a key is not found, use 'comma, ok' idiom to check if an element exists in the map
+   @code go
    map[KeyType]ValueType
+   make(map[KeyType]ValueType)
    @end
 
+   *** Examples
+       @code go
+       myMap = map[string]int{}
+       someMap := make(map[string]int)
+
+       // assign values
+       myMap["Jake"] = 32 // map[string]int{"Jake": 32}
+
+       // delete an element from the map
+       delete(myMap, "Jake")
+
+       // check if an element exists in the map
+       v, ok := myMap["Jake"] // ok = false
+       @end
 ** Structs
    - Structs are a collection of values of different types.
    - Structs are created with `make` keyword.
