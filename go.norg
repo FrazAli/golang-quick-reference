@@ -358,10 +358,14 @@ version: 0.0.11
 
 ** Slices (Dynamic length)
    - Slices are built on top of arrays but are dynamically sized.
+     See the source code for slice type: {https://cs.opensource.google/go/go/+/refs/tags/go1.21.5:src/runtime/slice.go;drc=bdc6ae579aa86d21183c612c8c37916f397afaa8;l=16}[src/runtime/slice.go]
+   - use `append` builtin function to add elements to the slice
    - Slices have a length (elements in the slice) and a capacity (elements in the underlying array). Read More: {https://go.dev/blog/slices-intro}
+   - As the slice grows, the capacity increases automatically. Behind the scenes, new larger array is allocated by copying data from old array to the new array and discarding the old array.
+   - Use `copy` builtin function to copy elements from one slice to another
 
 *** Syntax
-    @code text
+    @code go
     // Declaration
     SliceType = "[" "]" ElementType
 
@@ -370,16 +374,34 @@ version: 0.0.11
     new([capacity]T)[0:length]
     @end
 *** Examples
-    @code text
+    @code go
     someSlice = []int
 
     someSlice = make([]int, 50, 100)
+    fmt.Println(len(someSlice)) // length: 50
+    fmt.Println(cap(someSlice)) // capacity: 100
 
     // OR less commonly
     someSlice = new([100]int)[0:50]
 
     // slice with initial values
     names := []string{"John", "Jonas", "Martin"}
+
+    // append values to slice
+    names = append(names, "Fraz", "Garrett")
+
+    // Create a slice from another slice
+    lastTwo = names[3:] // ["Fraz", "Garrett"], storage is shared
+
+    // Deleting an element from slice, deletes element at index 3
+    names = append(names[0:3], names[4:]...) // '...' expands the slice values
+
+    // deep copy slices
+    newNames := make([]string, len(names))
+    copy(newNames, names)
+
+    // multi-dimensional slices
+    lists := [][]string{{"a", "b"}, {"c", "d"}} // [["a", "b"], ["c", "d"]]
     @end
 ** maps
    - Maps are a collection of key-value pairs.
