@@ -331,9 +331,23 @@ version: 0.0.11
    *Convention*: Use `int` type unless there are specific reasons to use a signed or unsigned integer type.
 
 ** Strings:
+   - Strings are enclosed in double quotes.
+   - Strings are immutable sequence of unicode characters.
+   -- In comparison `[]byte` is a mutable array of bytes.
+   -- Go provides functions to convert between `[]byte` and `string`.
    @code text
    string
    @end
+
+*** Examples
+    @code go
+    str := "Hello"
+    bytes := []byte(str)
+
+    bytes := []byte{0x48, 0x65, 0x6c, 0x6c, 0x6f}
+    str2 := string(bytes)
+    @end
+
 * Aggregate Types
 ** Arrays (Fixed length)
    - Arrays are fixed sized and are not commonly used in Go.
