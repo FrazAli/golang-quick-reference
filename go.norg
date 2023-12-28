@@ -483,6 +483,30 @@ version: 0.0.11
    ||    conditional OR     p || q  is  "if p then true else q"
    !     NOT                !p      is  "not p"
    @end
+** ... 'Operator'
+   `...` means different things depending on where it is used.
+
+   - Array size from initializer list
+   @code go
+   // Declares an array where size is determined from initializer list
+   arr := [...]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+   @end
+   - Variadic parameters
+   @code go
+   // Variadic parameters i.e. any number of arguments as a slice
+   func Println(a ...string) (int, error)
+   @end
+   - Expand and pass slice
+   @code go
+   // Expand a slice i.e. ["a", "b"] -> "a", "b"
+   names = []string{"John", "Jonas", "Martin"}
+   names = append(names, []string{"Fraz", "Garrett"}...)
+   @end
+   - Recursive directory pattern
+   @code bash
+   # Looks for tests in all sub-directories recursively
+   go test ./...
+   @end
 
 * Control Flow
 ** Conditionals
