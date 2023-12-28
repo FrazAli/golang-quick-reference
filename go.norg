@@ -579,9 +579,27 @@ version: 0.0.11
     }
    @end
 
-** Structs
-
 ** Functions
+*** Syntax
+    @code text
+   func (receiver) identifier(parameters) (returns) { body }
+    @end
+*** Examples
+    @code go
+    // multiple returns
+    func add(x, y int) (string, int) {
+      return "sum", x + y
+    }
+
+    // variadic function
+    func sum(nums ...any) int {
+      total := 0
+      for _, num := range nums { // 'nums is slice type
+        total += num.(int)
+      }
+      return total
+    }
+    @end
 
 *** Parameters
     - Similar to {*** combined variable declaration}, parameter types can be combined *if the parameters share the same type*, in such a case, the type of the last parameter applies to parameters before it. Compare the two equivalent examples below.
@@ -617,6 +635,56 @@ version: 0.0.11
     }
     @end
 
+*** Deferred Function Calls
+    - Functions calls can be deferred with `defer` keyword.
+    - Multiple deferred function calls are executed in last-in-first-out order.
+    @code go
+    func main() {
+      // prints 4, 3, 2, 1, 0
+      for i := 0; i < 5; i++ {
+        defer fmt.Println(i)
+      }
+    }
+    @end
+    - Deferred functions calls are evaluated (parameters parsed) when the `defer` statement is executed, its only the execution that is 'deferred'
+    -- This behavior allow for useful features such as tracing.
+    @code go
+    func trace(s string) string {
+      fmt.Println("entering:", s)
+      return s
+    }
+
+    func un(s string) {
+      fmt.Println("leaving:", s)
+    }
+
+    func a() {
+      defer un(trace("a"))
+      fmt.Println("in a")
+    }
+
+    func b() {
+      defer un(trace("b"))
+      fmt.Println("in b")
+      a()
+    }
+
+    func main() {
+      b()
+    }
+
+    /*
+    prints
+
+    entering: b
+    in b
+    entering: a
+    in a
+    leaving: a
+    leaving: b
+    */
+    @end
+    Source: {https://go.dev/doc/effective_go#defer}[Effective Go: defer]
 
      /************************************************************/
 
