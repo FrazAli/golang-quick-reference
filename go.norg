@@ -282,6 +282,7 @@ version: 0.0.11
   func main() {
     x := 3
     y := 5
+
     // spaces are automatically added to parameters
     fmt.Println("The sum of", x, "and", y, "is", x+y);
     // Same output with a formatted print function
@@ -430,14 +431,49 @@ version: 0.0.11
        // check if an element exists in the map
        v, ok := myMap["Jake"] // ok = false
        @end
+
 ** Structs
    - Structs are a collection of values of different types.
-   - Structs are created with `make` keyword.
-   @code text
-   struct {
+   - Structs can be declared as types with `struct` keyword.
+   - Structs can also be anonymous.
+   - Stucts can be composed by embedding other structs. The fields of embedded structs are promoted to the parent struct (This is similar to inheritance in other programming languages).
+
+*** Examples
+   @code go
+   type Person struct {
      name string
      age int
    }
+
+   p := Person{name: "John", age: 32}
+   fmt.Println(p)
+   fmt.Println(p.name, p.age) // access struct fields with dot operator
+
+   // Anonymous struct
+   person := struct {
+     name string
+     age int
+   }{
+     name: "John",
+     age: 32,
+   }
+
+   // Composition - embedded structs
+   type Employee struct {
+     Person
+     title string
+   }
+
+   emp := Employee{
+     Person: p
+     title: "Software Engineer",
+   }
+
+   /* Embedded struct fields / functions are promoted to the enclosing struct.
+    * Accessing Person fields directly from Employee.
+    */
+   fmt.Println("Employee:", emp.name, emp.age, emp.title) // Employee: John 32 Software Engineer
+
    @end
 
 * Operators
