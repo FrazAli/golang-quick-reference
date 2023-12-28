@@ -700,6 +700,26 @@ version: 0.0.11
     @end
     Source: {https://go.dev/doc/effective_go#defer}[Effective Go: defer]
 
+** Methods
+   - Methods are functions attached to a type through the 'receiver' parameter before function name.
+
+*** Syntax
+   @code text
+    func (someType) methodName(parameterList) (returnList)
+   @end
+
+*** Examples
+   @code go
+   type person struct {
+     name string
+     age  int
+   }
+
+   func (p person) toString() string {
+     return fmt.Sprintf("%v (%v years)", p.name, p.age)
+   }
+    @end
+
      /************************************************************/
 
 ** If/Else Statements
