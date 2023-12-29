@@ -644,6 +644,35 @@ version: 0.0.11
       fmt.Println("Hello", s)
     }(" World!")
     @end
+**** Function Expressions
+     - Similar to other languages, functions can be assigned to variables or passed around as arguments to other functions.
+     - Anonymous functions can be returned as a value.
+     - Anonymous functions can be passed as *callback*.
+
+     @code go
+     add := func(x, y int) int {
+       return x + y
+     }
+
+     ret := add(1, 2)
+
+     // Anonymous functions can be returned as a value
+     func adder() func(int, int) int {
+       return func(x, y int) int {
+         return x + y
+       }
+     }
+
+     f := adder()
+     f(1, 2)
+
+     // Anonymous function  as callback
+     func doOp(a int, b int, f func(int, int) int) int {
+       return f(a, b)
+     }
+
+     ret = doOp(1, 2, add)
+     @end
 *** Parameters
     - Similar to {*** combined variable declaration}, parameter types can be combined *if the parameters share the same type*, in such a case, the type of the last parameter applies to parameters before it. Compare the two equivalent examples below.
 
