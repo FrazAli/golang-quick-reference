@@ -673,6 +673,21 @@ version: 0.0.11
 
      ret = doOp(1, 2, add)
      @end
+***** Closure
+      @code go
+      func inc() func() int {
+        x := 0
+        return func(x int) int {
+          x++
+          return x
+        }
+      }
+
+      fmt.Println(adder()) // 1
+      fmt.Println(adder()) // 2
+      fmt.Println(adder()) // 3
+      @end
+
 *** Parameters
     - Similar to {*** combined variable declaration}, parameter types can be combined *if the parameters share the same type*, in such a case, the type of the last parameter applies to parameters before it. Compare the two equivalent examples below.
 
