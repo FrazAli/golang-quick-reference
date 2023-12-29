@@ -2059,43 +2059,44 @@ version: 0.0.11
      fmt.Println("Random number (0 - 99): ", rand.Intn(100))
    }
    @end
-* Crates and Modules
-  You can find crates on {https://crates.io/crates/rand}[crates.io]
-** Std
-*** Io
-    Use the `io` module of the `std` library for input/output.
-**** Input
-     You can get input with `io::stdin()` and then calling the `read_line` method on it.
-     This looks like that:
-     @code rust
-     io::stdin()
-     .read_line(&mut <string_variable>) // needs to be mutable
-     @end
+** Buffer IO
+   - `bytes` package in the standard library provides functions for working with byte slices and byte buffers.
 
-* Cargo
-  Cargo is a build system and dependency manager for rust.
-  It comes builtin with rustup.
-** New project
-   You can start a new project with `cargo new <project_name>`.
-   This will create a directory `<project_name>`.
-   Inside this there will be a `cargo.toml`, a `.gitignore` and a /src/main.rs/ file in which there will be a "Hello World!" program.
-** Config
-   You place the config for cargo in a `cargo.toml` file at the root of your project.
-   There you specify metadata about your project and dependencies.
-** Commands
-*** Build
-    You can build projects with `cargo build`.
-    This will compile the code and place an executable inside `target/debug/`.
-**** Release
-     You can use the `--release` flag to compile a release.
-     For a release binary the code will be optimized so it will run faster. Because of that it takes longer to compile it.
-     ---
-    So if you compile your binary often (e.g. for testing) you shouldn't use the `release` flag.
-    But if you run it often and only compile it once it is worth the time it takes to compile with the `release` flag.
+*** Examples
+   @code go
+   type person struct {
+     first string
+     last string
+   }
 
-*** Run
-    You can build an run your code in one step with `cargo run`.
+   func (p person) writeOut(w io.Writer) error {
+     _, err := w.Write([]byte(p.first))
+     return err
+   }
 
-*** Check
-    With `cargo check` cargo just checks if your code would compile but doesn't compile it.
-    This is useful for quick tests while coding.
+   func main() {
+     b := bytes.NewBufferString("Hello")
+     fmt.Println(b.String()) // Hello
+     b.WriteString(" World!")
+     fmt.Println(b.String())  // Hello World!
+     b.reset()
+     b.WriteString("Wow!")
+     fmt.Println(b.String())  // Wow!
+     b.Write([]byte(" Cool!"))
+     fmt.Println(b.String())  // Wow! Cool!
+
+     // Write buffer to a file using the io.Writer interface
+     f, _ := os.Create("test.txt")
+     if err != nil {
+       log.Fatalf("error %s", err)
+     }
+     defer f.close()
+
+     p := person{first: "Morgan", last: "freeman"}
+
+     var b bytes.Buffer
+     p.writeOut(f)  // check and handle errors
+     p.writeOut(&b) // check and handle errors
+     fmt.Println(b.String())
+   }
+    @end
