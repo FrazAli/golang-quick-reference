@@ -920,7 +920,7 @@ version: 0.0.11
 * Testing
   - Test file names must end with `_test.go`
   - Test files must be in the same package
-  - Test functions must start with `Test` followed by the function name that should start with a capital letter. e.g. `func TestSomeFunction()`
+  - Test functions must start with `Test` followed by the function name that should start with a capital letter. e.g. `func TestSomeFunction(t *testing.T)`
 
 ** Example
    @code go
