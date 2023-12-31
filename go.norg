@@ -144,7 +144,7 @@ version: 0.0.11
 
 
 * Comments
-  You do comments with `//` at the beginning of a line. Multi-line comments are started with `/*` and ended with `*/`.
+  Single line comments start with `//` at the beginning of a line. Multi-line comments are started with `/*` and ended with `*/`.
 
 * Variables
   - Go is a statically typed language.
@@ -918,33 +918,76 @@ version: 0.0.11
     @end
 
 * Testing
-  - Test file names must end with `_test.go`
-  - Test files must be in the same package
-  - Test functions must start with `Test` followed by the function name that should start with a capital letter. e.g. `func TestSomeFunction(t *testing.T)`
+** Unit tests
+   A unit test is a function that tests a single function, method, or struct.
+   - Test file names must end with `_test.go`
+   - Test files must be in the same package
+   - Test functions must start with `Test` followed by the function name that should start with a capital letter. e.g. `func TestSomeFunction(t *testing.T)`
 
-** Example
-   @code go
-   // main.go
-   package main
+*** Example
+    @code go
+    // main.go
+    package main
 
-   func Add(x, y int) int {
-     return x + y
-   }
+    func Add(x, y int) int {
+      return x + y
+    }
 
-   // main_test.go
-   package main
+    // main_test.go
+    package main
 
-   import "testing"
+    import "testing"
 
-   func TestAdd(t *testing.T) {
-     result := Add(1, 2)
-     if result != 3 {
-       t.Errorf("Incorrect sum, want 3, got %d", Add(1, 2))
-     }
-   }
-   @end
+    func TestAdd(t *testing.T) {
+      result := Add(1, 2)
+      if result != 3 {
+        t.Errorf("Incorrect sum, want 3, got %d", Add(1, 2))
+      }
+    }
+    @end
 ** Running tests
    From the package root, run the tests with:
    - Run all tests in current package: `go test`
    - For test coverage, use -cover: `go test -cover`
+
+* Documentation
+  - Documentation can be generated with `go doc` in the terminal.
+  - For detailed documentation, use a separate file `doc.go` in the package root.
+** Comment Recommendations
+   - Do not use URLs in comments, instead, include reference to any README that may include links / URLs
+   - Use short and clear sentences over long lines.
+   - Comments should provide context to the code that is not clear from the code itself.
+
+** Comment Syntax
+   See builtin go modules for syntax of code comments that allows documentation to be generated with `go doc` command. Here is a brief overview:
+
+*** Package
+    A brief one-liner describing the purpose of the package.
+    @code go
+    // Package math provides mathematical constants and functions.
+    package math
+    @end
+*** Function / Method
+    A brief one-liner describing the purpose of the function / method.
+    @code go
+    // Add returns the sum of x and y.
+    func Add(x, y int) int {
+      return x + y
+    }
+    @end
+*** Type
+    A brief one-liner describing the purpose of the type.
+    @code go
+    // Person represents a person with a name and age.
+    type Person struct {
+      name string
+      age int
+    }
+    @end
+*** Constant / Variable
+    A brief one-liner describing the constant / variable.
+    @code go
+    // Pi is the ratio of a circle's circumference to its diameter.
+    const Pi = 3.14
+    @end
 
