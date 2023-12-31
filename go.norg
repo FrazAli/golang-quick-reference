@@ -916,3 +916,35 @@ version: 0.0.11
      fmt.Println(b.String())
    }
     @end
+
+* Testing
+  - Test file names must end with `_test.go`
+  - Test files must be in the same package
+  - Test functions must start with `Test` followed by the function name that should start with a capital letter. e.g. `func TestSomeFunction()`
+
+** Example
+   @code go
+   // main.go
+   package main
+
+   func Add(x, y int) int {
+     return x + y
+   }
+
+   // main_test.go
+   package main
+
+   import "testing"
+
+   func TestAdd(t *testing.T) {
+     result := Add(1, 2)
+     if result != 3 {
+       t.Errorf("Incorrect sum, want 3, got %d", Add(1, 2))
+     }
+   }
+   @end
+** Running tests
+   From the package root, run the tests with:
+   - Run all tests in current package: `go test`
+   - For test coverage, use -cover: `go test -cover`
+
