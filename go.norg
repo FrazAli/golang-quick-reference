@@ -497,6 +497,45 @@ version: 0.0.11
 
    @end
 
+* Generic Types
+  - Generic types allow to write code that can work with any type.
+  - Generic types are denoted with the capital letter `T` by convention.
+  - Generic type can be declared to be any type with `any` keyword.
+  - Generic types can be used to restrict or group other types.
+
+** Examples
+   @code go
+   // Generic functions include a type specification in square brackets
+   func generic[T any](x T) T {}
+
+   // Generic type T that can be an `int` or `float64`
+   func generic[T int | float64](x T) T {}
+
+   // Typically interfaces are used to group types that can be used in generic functions
+   type myNumber interface {
+     ~int | ~float64
+   }
+   func generic[T myNumber](x T) T {}
+   @end
+** Type Constraints - The `~` token / operator
+   - The `~` token is used to specify that the type specification applies to the underlying types. For example, `~string` means that a set of all types who have string as their underlying types.
+   - The `~` token is useful when types are redefined or when type aliases are used.
+   - By convention, use the builtin `constraints` package for various pre-defined constraint types (Complex, Integer, Float, Ordered, Signed, Unsigned). Read more about the {https://pkg.go.dev/golang.org/x/exp/constraints}[constraints package].
+
+*** Examples** 
+   @code go
+   // An alias of int type
+   type BigInt int
+
+   // An alias of float64
+   type BigFloat float64
+
+   // nyNum interface accepts any of the types: int, float64, BigInt, BigFloat
+   type myNum interface {
+     ~int | ~float64
+   }
+   @end
+
 * Operators
 ** Logical Operators
    @code text
