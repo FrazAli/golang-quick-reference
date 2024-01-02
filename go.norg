@@ -336,7 +336,14 @@ version: 0.0.11
    -- In comparison `[]byte` is a mutable array of bytes.
    -- Go provides functions to convert between `[]byte` and `string`.
    @code text
-   string
+   string      sequence of characters
+   @end
+
+** Other
+   @code text
+   any               any type
+   comparable        any type that supports all comparison operators
+   uintptr           unsafe pointer type (not typically used)
    @end
 
 *** Examples
