@@ -954,6 +954,46 @@ version: 0.0.11
    }
     @end
 
+** Marshalling and Unmarshalling JSON
+   - `encoding/json` package in the standard library provides functions for working with JSON.
+   - Marshalling means converting a Go struct to a JSON string.
+   - Unmarshalling means converting a JSON string to a Go struct.
+   - *Tip:* Use {https://mholt.github.io/json-to-go/}[json-to-go] to convert JSON to Go structs.
+
+*** Example
+   @code go
+   package main
+
+   import (
+     "encoding/json"
+     "fmt"
+   )
+
+   type person struct {
+     first string
+     last  string
+   }
+
+   func main() {
+     p := person{first: "Morgan", last: "Freeman"}
+     b, _ := json.Marshal(p)
+     fmt.Println(string(b))
+
+     // Marshalling JSON
+     person_json, err := json.Marshal(person)
+     if err != nil {
+       log.Fatalf("Error marshalling person: %s", err)
+     }
+     fmt.Println(string(person_json))
+
+     // Unmarshalling JSON
+     var p1 person
+     // without string literals: "{\"first\": "Morgan", \"last\": \"Freeman\"}"
+     json.Unmarshal([]byte(`{"first": "Morgan", "last": "Freeman"}`), &p1)
+     fmt.Println(p1)
+   }
+    @end
+
 * Testing
 ** Unit tests
    A unit test is a function that tests a single function, method, or struct.
