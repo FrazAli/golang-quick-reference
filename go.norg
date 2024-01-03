@@ -107,7 +107,50 @@ version: 0.0.11
    - The preferred way to avoid race conditions, is to not use shared memory, instead use Go channels to synchronize go routines.
    - In case shared data is unavoidable, race conditions can be resolved by using {*** Mutexes} or by using the atomic operations through the standard library package {https://pkg.go.dev/sync/atomic}[`sync/atomic`].
 
+*** Mutexes
+    - Mutexes are used to synchronize access to shared resources.
+    - See the example below to see how race conditions can be resolved using a mutex.
+    - *Tip:* Use `-race` flag to enable race detector in the command line. For example `go run -race main.go`
+    @code go
+    package main
 
+    import (
+      "fmt"
+      "runtime"
+      "sync"
+    )
+
+    var mu sync.Mutex
+
+    func main() {
+      fmt.Println("CPUs: ", runtime.NumCPU())
+      fmt.Println("Go routines: ", runtime.NumGoroutine())
+
+      counter := 0
+
+      const goroutines = 100
+      var wg sync.WaitGroup
+      wg.Add(goroutines)
+
+      var mutex sync.Mutex
+
+      for i := 0; i < goroutines; i++ {
+        go func() {
+          mutex.Lock()
+          v := counter
+          runtime.Gosched() // Yield the CPU - similar to time.Sleep()
+          v++
+          counter = v
+          mutex.Unlock()
+          wg.Done()
+        }()
+        fmt.Println("Go routines: ", runtime.NumGoroutine())
+      }
+      wg.Wait()
+      fmt.Println("Go routines: ", runtime.NumGoroutine())
+      fmt.Println("Counter: ", counter)
+    }
+    @end
 
 * Tooling
 ** Packages
