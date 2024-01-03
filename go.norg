@@ -1038,6 +1038,32 @@ version: 0.0.11
     @end
     For more examples see the {https://pkg.go.dev/sort}[sort package] in the standard library.
 
+** Password Encryption
+   - `crypto/bcrypt` package in the standard library provides functions for password encryption and decryption.
+
+*** Example
+    @code go
+    import (
+      "crypto/bcrypt"
+      "fmt"
+    )
+
+    func main() {
+      password := "password123"
+      hash, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+      fmt.Println(string(hash))
+
+      // password from client
+      err := bcrypt.CompareHashAndPassword(hash, []byte(password))
+      if err != nil {
+        fmt.Println(err)
+        return
+      }
+      // Password matches
+      fmt.Println("Success!")
+    }
+    @end
+
 ** Marshalling and Unmarshalling JSON
    - `encoding/json` package in the standard library provides functions for working with JSON.
    - Marshalling means converting a Go struct to a JSON string.
