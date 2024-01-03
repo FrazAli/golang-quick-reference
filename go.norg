@@ -896,16 +896,7 @@ version: 0.0.11
    }
     @end
 
-     /************************************************************/
-
-* Useful things
-** Local documentation
-   You can access documentation with `go doc` in the terminal.
-   @code bash
-   go doc fmt  # Display documentation of the 'fmt' package
-   @end
-   You can view the documentation of your current package with `go doc` in the package root directory.
-
+* Applications
 ** Random number
    The `math/rand` package can be used to generate random numbers.
    For example you can generate a pseudo random number between 1 and 100:
@@ -1153,4 +1144,11 @@ version: 0.0.11
     // Pi is the ratio of a circle's circumference to its diameter.
     const Pi = 3.14
     @end
+
+** Local documentation
+   You can access documentation with `go doc` in the terminal.
+   @code bash
+   go doc fmt  # Display documentation of the 'fmt' package
+   @end
+   You can view the documentation of your current package with `go doc` in the package root directory.
 
