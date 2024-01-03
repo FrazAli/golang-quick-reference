@@ -151,6 +151,43 @@ version: 0.0.11
       fmt.Println("Counter: ", counter)
     }
     @end
+    ** Atomic Operations
+       The example above can be re-written to use atomic operations instead of mutexes.
+       @code go
+       package main
+
+       import (
+         "fmt"
+         "runtime"
+         "sync"
+         "sync/atomic"
+       )
+
+       func main() {
+         fmt.Println("CPUs: ", runtime.NumCPU())
+         fmt.Println("Go routines: ", runtime.NumGoroutine())
+
+         var counter int64 = 0 // int64 allows to use Atomic functions
+
+         const goroutines = 100
+         var wg sync.WaitGroup
+         wg.Add(goroutines)
+
+         for i := 0; i < goroutines; i++ {
+           go func() {
+             atomic.AddInt64(&counter, 1) // atomically increment
+             runtime.Gosched()
+             // atomically read
+             fmt.Println("Counter: ", atomic.LoadInt64(&counter))
+             wg.Done()
+           }()
+           fmt.Println("Go routines: ", runtime.NumGoroutine())
+         }
+         wg.Wait()
+         fmt.Println("Go routines: ", runtime.NumGoroutine())
+         fmt.Println("Counter: ", counter)
+       }
+       @end
 
 * Tooling
 ** Packages
