@@ -39,6 +39,8 @@ version: 0.0.11
 
 
 * Concurrency
+  Here is a brief overview of concurrency features in Go language. To learn more about it, read More: {https://go.dev/doc/effective_go#concurrency}
+
 ** Goroutines
    - A `goroutine` is a lightweight thread.
    - A `goroutine` can be started with `go` keyword.
@@ -76,7 +78,6 @@ version: 0.0.11
     <-c   // Wait for sort to finish; discard sent value.
     @end
 
-  Read More: {https://go.dev/doc/effective_go#concurrency}
 
 
 * Tooling
