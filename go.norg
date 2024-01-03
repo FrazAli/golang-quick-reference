@@ -102,6 +102,11 @@ version: 0.0.11
    @end
    See a more elaborate example: {https://pkg.go.dev/sync#example-WaitGroup}
 
+** Race Conditions
+   - Race conditions occur when multiple goroutines access shared data.
+   - The preferred way to avoid race conditions, is to not use shared memory, instead use Go channels to synchronize go routines.
+   - In case shared data is unavoidable, race conditions can be resolved by using {*** Mutexes} or by using the atomic operations through the standard library package {https://pkg.go.dev/sync/atomic}[`sync/atomic`].
+
 
 
 * Tooling
