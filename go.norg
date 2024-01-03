@@ -522,7 +522,7 @@ version: 0.0.11
    - The `~` token is useful when types are redefined or when type aliases are used.
    - By convention, use the builtin `constraints` package for various pre-defined constraint types (Complex, Integer, Float, Ordered, Signed, Unsigned). Read more about the {https://pkg.go.dev/golang.org/x/exp/constraints}[constraints package].
 
-*** Examples** 
+*** Examples**
    @code go
    // An alias of int type
    type BigInt int
@@ -975,6 +975,68 @@ version: 0.0.11
      fmt.Println(b.String())
    }
     @end
+
+** Sorting
+   - `sort` package in the standard library provides functions for sorting slices and maps.
+
+*** Examples
+    @code go
+    import (
+      "fmt"
+      "sort"
+    )
+
+    func main() {
+      s := []int{5, 2, 6, 3, 1, 4}
+      names := []string[]{"John", "Jonas", "Martin", "Fraz", "Garrett"}
+
+      sort.Ints(s)
+      fmt.Println(s)  // [1 2 3 4 5 6]
+
+      sort.String(names)
+      fmt.Println(names) // ["Fraz" "Garrett" "John" "Jonas" "Martin"]
+    }
+    @end
+
+*** Custom Sorting
+    - To sort a slice of custom types, implement the `sort.Interface` interface.
+    - The example below shows how to sort a slice of `person` structs by the age of the person.
+    @code go
+    type person struct {
+      name string
+      age  string
+    }
+
+    func (p person) String() string {
+      return fmt.Sprintf("%s (%s)", p.name, p.age)
+    }
+
+    func (p person) Len() int {
+      return len(p)
+    }
+
+    func (p person) Swap(i, j int) {
+      p[i], p[j] = p[j], p[i]
+    }
+
+    func (p person) Less(i, j int) bool {
+      return p[i].age < p[j].age
+    }
+
+    func main() {
+      persons := []person{
+        {"Fraz", "35"},
+        {"John", "32"},
+        {"Garrett", "36"},
+        {"Jonas", "33"},
+        {"Martin", "34"},
+      }
+
+      sort.Sort(persons)
+      fmt.Println(persons)
+    }
+    @end
+    For more examples see the {https://pkg.go.dev/sort}[sort package] in the standard library.
 
 ** Marshalling and Unmarshalling JSON
    - `encoding/json` package in the standard library provides functions for working with JSON.
