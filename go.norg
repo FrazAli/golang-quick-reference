@@ -912,6 +912,28 @@ version: 0.0.11
      fmt.Println("Random number (0 - 99): ", rand.Intn(100))
    }
    @end
+
+** The `Writer` Interface
+   - The `io.Writer` interface is implemented by any value that has a method with the following signature:
+   @code go
+   Write(p []byte) (n int, err error)
+   @end
+   - For example, the {https://pkg.go.dev/os#File}[`File`] type in Go implements the `io.Writer` interface.
+   - Similarly, `fmt.Println` function which wraps `fmt.Fprintln` function, that implements the `io.Writer` interface. It uses os.Stdout as the File type for writing to stdout.
+   - The example below shows how the `io.Writer` interface enables a consistent and powerful way to implement and use Interfaces in Go.
+   @code go
+   import (
+     "fmt"
+     "os"
+   )
+
+   func main() {
+     fmt.Println("Hello, World!")
+     fmt.Fprintln(os.Stdout, "Hello, World!")
+     io.WriteString(os.Stdout, "Hello, World!")
+   }
+   @end
+
 ** Buffer IO
    - `bytes` package in the standard library provides functions for working with byte slices and byte buffers.
 
