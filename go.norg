@@ -1104,6 +1104,35 @@ version: 0.0.11
    }
     @end
 
+** Print Runtime System Information
+   - `runtime` package in the standard library provides functions for printing some useful system information.
+
+*** Example
+    @code go
+    import (
+      "fmt"
+      "runtime"
+    )
+
+    func main() {
+      fmt.Println("OS:", runtime.GOOS)
+      fmt.Println("ARCH:", runtime.GOARCH)
+      fmt.Println("CPUs:", runtime.NumCPU())
+      fmt.Println("Goroutines:", runtime.NumGoroutine())
+      fmt.Println("GOMAXPROCS:", runtime.GOMAXPROCS(0))
+      fmt.Println("Version:", runtime.Version())
+
+      /* Example output
+        OS: linux
+        ARCH: amd64
+        CPUs: 8
+        Goroutines: 1
+        GOMAXPROCS: 8
+        Version: go1.21.4
+      */
+    }
+    @end
+
 * Testing
 ** Unit tests
    A unit test is a function that tests a single function, method, or struct.
