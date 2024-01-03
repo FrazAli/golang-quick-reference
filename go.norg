@@ -78,6 +78,30 @@ version: 0.0.11
     <-c   // Wait for sort to finish; discard sent value.
     @end
 
+** Wait Groups
+   - A `WaitGroup` is used to wait for a group of goroutines to finish.
+   @code go
+   import (
+     "fmt"
+     "runtime"
+     "sync"
+   )
+
+   var wg sync.WaitGroup
+
+   func main () {
+     wg.Add(1) // Increment the WaitGroup coutner
+     go func() {
+       fmt.Println("Working from a goroutine!")
+       wg.Done() // Decrements the WaitGroup Counter
+     }()
+
+     fmt.Println("Waiting to finish from the main")
+     wg.Wait() // Waits for WaitGroup count to reach zero
+   }
+   @end
+   See a more elaborate example: {https://pkg.go.dev/sync#example-WaitGroup}
+
 
 
 * Tooling
