@@ -120,6 +120,31 @@ version: 0.0.11
     doSomethingForAWhile()
     <-c   // Wait for sort to finish; discard sent value.
     @end
+    - Send and receive using a channel
+    @code go
+    package main
+
+    import (
+      "fmt"
+    )
+
+    func main() {
+      c := make(chan int)
+
+      go send(c)
+
+      for i := 0; i < 100; i++ {
+        fmt.Println(<-c)
+      }
+    }
+
+    // bi-directional to send-only channel as parameter
+    func send(c chan<- int) {
+      for i := 0; i < 100; i++ {
+        c <- i
+      }
+    }
+    @end
 
 ** Wait Groups
    - A `WaitGroup` is used to wait for a group of goroutines to finish.
