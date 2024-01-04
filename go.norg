@@ -224,6 +224,11 @@ version: 0.0.11
     }
     @end
 
+*** Patterns - Pipelines and Cancellation
+    *Tip:* It is best to follow well known concurrency patterns e.g. 'Fan-in' and 'Fan-out', and using 'Context' to cancel any recursively launched go routines.
+    - Read more about useful concurrency patterns: {https://go.dev/blog/pipelines}
+    - Also read about how to use context to cancel go routines: {https://pkg.go.dev/context}
+
 ** Wait Groups
    - A `WaitGroup` is used to wait for a group of goroutines to finish.
    @code go
