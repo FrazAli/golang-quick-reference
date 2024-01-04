@@ -145,6 +145,33 @@ version: 0.0.11
       }
     }
     @end
+*** Using `range` with Channels
+    - The `range` keyword can be used to iterate over a channel.
+    - The channel must be closed to stop the iteration.
+    @code go
+    package main
+
+    import (
+      "fmt"
+    )
+
+    func main() {
+      c := make(chan int)
+
+      go send(c)
+
+      for v := range c {
+        fmt.Println(v)
+      }
+    }
+
+    func send(c chan<- int) {
+      for i := 0; i < 100; i++ {
+        c <- i
+      }
+      close(c) // Needed for range to work
+    }
+    @end
 
 ** Wait Groups
    - A `WaitGroup` is used to wait for a group of goroutines to finish.
