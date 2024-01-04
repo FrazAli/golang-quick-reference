@@ -55,15 +55,58 @@ version: 0.0.11
   @end
 
 ** Channels
-   - Channels are a way to communicate between goroutines.
+   - Channels are the preferred way to communicate between goroutines.
    - Like maps, channels are created with `make` keyword.
+   - By default channels are bidirectional (`chan` keyword), but can be declared as unidirectional e.g. A send only unidirectional channel: `chan <- int`
+   @code go
+   // uni-directional send-only channel
+   cs := make(chan<- int, 2)
+   cs <- 42
+   fmt.Println(<-co)  // Will cause error, since co is send-only
+
+   // uni-directional receive-only channel
+   cr := make(<-chan int, 2)
+   cr <- 42  // Will cause error, since cp is receive-only
+   @end
+
+   - Since channels are types, they can be assigned to each other depending on the type of the channel.
+   -- When assigning channels to each-other,
+   --- channels can be assigned from bidirectional to unidirectional, not vice-versa.
+   --- unidirectional channels cannot be assigned to other unidirectional channels.
+   @code go
+   c := make(chan int)
+   cr := make(<- chan int) // receive-only
+   cs := make(chan<- int)  // send-only
+
+   // uni-directional to bi-directional channel
+   c = cs  // ❌ Will cause error, since cs is send-only
+   c = cr  // ❌ Will cause error, since cs is receive-only
+
+   // bi-directional to uni-directional channel can be assigned
+   cs = c  // ✅
+   cr = c  // ✅
+   @end
+
+   - By defaults channels are unbuffered (i.e. buffer size is zero).
+   - Unbuffered channels are blocking until the value on the channel is received.
+   - Beffered channels are non-blocking until the buffer is full.
+   - *Tip:* Use unbuffered channels unless there are specific reasons to use a buffered channel. The purpose of channels is to 'synchronize' and therefor a buffered channel is rarely used.
    @code go
    // unbuffered channel of integers, default size zero
    ci := make(chan int)
    // unbuffered channel of integers, explicit size set to zero
    cj := make(chan int, 0)
-   // buffered channel of pointers to Files
-   cs := make(chan *os.File, 100)
+   // buffered channel of pointers to Files with size 100
+   cf := make(chan *os.File, 100)
+
+   // putting values on the channel
+   ci <- 42
+
+   // receiving values from the channel
+   fmt.Println(<-ci)
+   v := <-ci
+
+
    @end
 *** Examples
     - Signal using a channel
