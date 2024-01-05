@@ -1100,20 +1100,20 @@ version: 0.0.11
    }
     @end
 
-** Interfaces
-   - Interfaces declare behaviors (i.e. functions) that a type must implement.
-   - Many types can implement an interface i.e. Through interfaces 'polymorphism' is possible in Go.
-   - Types can implicitly implement an interface e.g. Any type that implements a function with signature `String() string` implicitly implements the builtin {https://pkg.go.dev/fmt#Stringer}[`fmt.Stringer`] interface
-   -- Builtin interfaces allows to leverage the builtin functions (e.g. fmt.Println()) to be used with the custom types.
+* Interfaces
+  - Interfaces declare behaviors (i.e. functions) that a type must implement.
+  - Many types can implement an interface i.e. Through interfaces 'polymorphism' is possible in Go.
+  - Types can implicitly implement an interface e.g. Any type that implements a function with signature `String() string` implicitly implements the builtin {https://pkg.go.dev/fmt#Stringer}[`fmt.Stringer`] interface
+  -- Builtin interfaces allows to leverage the builtin functions (e.g. fmt.Println()) to be used with the custom types.
 
-*** Syntax
+** Syntax
    @code text
-    type interfaceName interface {
-      methodName(parameterList) (returnList)
-    }
-    @end
+   type interfaceName interface {
+   methodName(parameterList) (returnList)
+   }
+   @end
 
-*** Examples
+** Examples
    @code go
    type person struct {
      name string
@@ -1155,7 +1155,7 @@ version: 0.0.11
      saySomething(p)
      saySomething(e)
    }
-    @end
+   @end
 
 * Useful Applications using the Standard Library
 ** Random number
