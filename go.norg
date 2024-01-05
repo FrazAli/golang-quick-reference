@@ -1157,6 +1157,31 @@ version: 0.0.11
    }
    @end
 
+* Error Handling
+  - There is no exception handling in Go, instead any errors are returned as an error type, and should be handled through comma-error idiom.
+  - *Tip:* Use comma-error idiom to check for errors as much as possible.
+  - The `errors` package provides a set of functions to work with errors.
+  - New errors can be created with the `errors.New` function.
+  -- The `fmt.Errorf` provides a more convenient way to create errors with parameters.
+  - The `log` package allows to write the errors with timestamp to stdout or to a file.
+  - Critical errors can be handled with the `panic` function which recursively stops all go routines.
+  - In case of a critical error that requires immediate termination, use the `log.Fatalf` function to log the error and exit, it internally uses `os.Exit` to exit with an error.
+
+** Examples
+   @code go
+   import (
+     "errors"
+     "fmt"
+   )
+
+   func main() {
+     _, err := strconv.Atoi("a")
+     if err != nil {
+       fmt.Errorf("Error converting string to integer: %w", err)
+     }
+   }
+   @end
+
 * Useful Applications using the Standard Library
 ** Random number
    The `math/rand` package can be used to generate random numbers.
