@@ -1570,50 +1570,63 @@ version: 0.0.11
    - For test coverage, use -cover: `go test -cover`
 
 * Documentation
-  - Documentation can be generated with `go doc` in the terminal.
-  - For detailed documentation, use a separate file `doc.go` in the package root.
-** Comment Recommendations
-   - Do not use URLs in comments, instead, include reference to any README that may include links / URLs
-   - Use short and clear sentences over long lines.
-   - Comments should provide context to the code that is not clear from the code itself.
+** The `go doc` command
+   - Read the help doc: `go doc -help`
+   - You can access documentation with `go doc` in the terminal.
+    @code bash
+    go doc fmt  # Display documentation of the 'fmt' package
+    @end
+   - You can view the documentation of your current package with `go doc` in the package root directory.
 
-** Comment Syntax
-   See builtin go modules for syntax of code comments that allows documentation to be generated with `go doc` command. Here is a brief overview:
+** Useful Links
+   - {https://godoc.org}[godoc.org] - Documentation for third-party and standard library packages.
+   - {https://go.dev/doc}[go.dev/doc] - Short tutorials and documentation for standard library packages.
+** Package Documentation
+*** Generation
+   - Documentation for a package is generated with `godoc` command (`godoc` is not the same as `go doc`) in the terminal, the inline code comments are the main source of documentation in this case. See {*** Comment Syntax} for more details.
+   -- Install `godoc` package with `go install golang.org/x/tools/cmd/godoc@latest`
+   -- A local documentation server can be started with `godoc -http=:8080`
+*** Comment Recommendations
+    - Do not use URLs in comments, instead, include reference to any README that may include links / URLs
+    - Use short and clear sentences over long lines.
+    - Comments should provide context to the code that is not clear from the code itself.
+   - For detailed documentation, use a separate file `doc.go` in the package root.
+    -- For example, `doc.go` file for the `fmt` package can be found at: {https://cs.opensource.google/go/go/+/refs/tags/go1.21.5:src/fmt/doc.go}[`fmt/doc.go`]
 
-*** Package
-    A brief one-liner describing the purpose of the package.
-    @code go
-    // Package math provides mathematical constants and functions.
-    package math
-    @end
-*** Function / Method
-    A brief one-liner describing the purpose of the function / method.
-    @code go
-    // Add returns the sum of x and y.
-    func Add(x, y int) int {
-      return x + y
-    }
-    @end
-*** Type
-    A brief one-liner describing the purpose of the type.
-    @code go
-    // Person represents a person with a name and age.
-    type Person struct {
-      name string
-      age int
-    }
-    @end
-*** Constant / Variable
-    A brief one-liner describing the constant / variable.
-    @code go
-    // Pi is the ratio of a circle's circumference to its diameter.
-    const Pi = 3.14
-    @end
+*** Comment Syntax
+    See builtin go modules for syntax of code comments that allows documentation to be generated with `go doc` command. Here is a brief overview:
 
-** Local documentation
-   You can access documentation with `go doc` in the terminal.
-   @code bash
-   go doc fmt  # Display documentation of the 'fmt' package
-   @end
-   You can view the documentation of your current package with `go doc` in the package root directory.
+**** Package
+     A brief one-liner describing the purpose of the package.
+     @code go
+     // Package math provides mathematical constants and functions.
+     package math
+     @end
+**** Function / Method
+     A brief one-liner describing the purpose of the function / method.
+     @code go
+     // Add returns the sum of x and y.
+     func Add(x, y int) int {
+       return x + y
+     }
+     @end
+**** Type
+     A brief one-liner describing the purpose of the type.
+     @code go
+     // Person represents a person with a name and age.
+     type Person struct {
+       name string
+       age int
+     }
+     @end
+**** Constant / Variable
+     A brief one-liner describing the constant / variable.
+     @code go
+     // Pi is the ratio of a circle's circumference to its diameter.
+     const Pi = 3.14
+     @end
+** Publishing godoc documentation to godoc.org
+   Once the documentation is generated, and pushed to github, it can be published to godoc.org with a very simple search.
+   - Copy the github url of the pakcage and paste it in the search bar on godoc.org
+   - The documentation should now be in the search indexed on godoc.org and can be searched using the fuzzy search.
 
