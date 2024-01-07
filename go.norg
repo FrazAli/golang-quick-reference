@@ -1618,6 +1618,10 @@ version: 0.0.11
     }
     @end
 
+** Running tests
+   From the package root, run the tests with:
+   - Run all tests in current package: `go test`
+
 
 ** Coverage
    - For test coverage, use -cover: `go test -cover`
@@ -1651,11 +1655,6 @@ version: 0.0.11
       }
     }
     @end
-
-** Running tests
-   From the package root, run the tests with:
-   - Run all tests in current package: `go test`
-   - For test coverage, use -cover: `go test -cover`
 
 * Documentation
 ** The `go doc` command
