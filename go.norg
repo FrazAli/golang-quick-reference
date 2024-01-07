@@ -3,8 +3,8 @@ title: Go Programming Language
 description: A quick reference for Go programming language.
 authors: Fraz Ali <frazaliqureshi@gmail.com>
 categories:
-created: 2022-03-22
-version: 0.0.11
+created: 2023-12-16
+version: 0.0.1
 @end
 
 = TOC
@@ -52,7 +52,7 @@ version: 0.0.11
 
    // Example 2
    go list.Sort()  // run list.Sort concurrently; don't wait for it.
-  @end
+   @end
 
 ** Channels
    - Channels are the preferred way to communicate between goroutines.
@@ -219,7 +219,7 @@ version: 0.0.11
           } else {
             fmt.Println("Received: ", i)
           }
-        }
+      }
       }
     }
     @end
@@ -302,43 +302,43 @@ version: 0.0.11
       fmt.Println("Counter: ", counter)
     }
     @end
-    ** Atomic Operations
-       The example above can be re-written to use atomic operations instead of mutexes.
-       @code go
-       package main
+** Atomic Operations
+   The example above can be re-written to use atomic operations instead of mutexes.
+   @code go
+   package main
 
-       import (
-         "fmt"
-         "runtime"
-         "sync"
-         "sync/atomic"
-       )
+   import (
+     "fmt"
+     "runtime"
+     "sync"
+     "sync/atomic"
+   )
 
-       func main() {
-         fmt.Println("CPUs: ", runtime.NumCPU())
-         fmt.Println("Go routines: ", runtime.NumGoroutine())
+   func main() {
+     fmt.Println("CPUs: ", runtime.NumCPU())
+     fmt.Println("Go routines: ", runtime.NumGoroutine())
 
-         var counter int64 = 0 // int64 allows to use Atomic functions
+     var counter int64 = 0 // int64 allows to use Atomic functions
 
-         const goroutines = 100
-         var wg sync.WaitGroup
-         wg.Add(goroutines)
+     const goroutines = 100
+     var wg sync.WaitGroup
+     wg.Add(goroutines)
 
-         for i := 0; i < goroutines; i++ {
-           go func() {
-             atomic.AddInt64(&counter, 1) // atomically increment
-             runtime.Gosched()
-             // atomically read
-             fmt.Println("Counter: ", atomic.LoadInt64(&counter))
-             wg.Done()
-           }()
-           fmt.Println("Go routines: ", runtime.NumGoroutine())
-         }
-         wg.Wait()
-         fmt.Println("Go routines: ", runtime.NumGoroutine())
-         fmt.Println("Counter: ", counter)
-       }
-       @end
+     for i := 0; i < goroutines; i++ {
+       go func() {
+         atomic.AddInt64(&counter, 1) // atomically increment
+         runtime.Gosched()
+         // atomically read
+         fmt.Println("Counter: ", atomic.LoadInt64(&counter))
+         wg.Done()
+       }()
+       fmt.Println("Go routines: ", runtime.NumGoroutine())
+     }
+     wg.Wait()
+     fmt.Println("Go routines: ", runtime.NumGoroutine())
+     fmt.Println("Counter: ", counter)
+   }
+   @end
 
 * Tooling
 ** Packages
@@ -361,7 +361,7 @@ version: 0.0.11
    - User `go mod tidy` to cleanup up the dependencies.
 
 *** Exported Names
-   - The name of all exported symbols in a package start with a *capital Letter* e.g. fmt.Printf
+    - The name of all exported symbols in a package start with a *capital Letter* e.g. fmt.Printf
 
 ** Modules
    - The go packages are organized in modules.
@@ -715,20 +715,20 @@ version: 0.0.11
    make(map[KeyType]ValueType)
    @end
 
-   *** Examples
-       @code go
-       myMap = map[string]int{}
-       someMap := make(map[string]int)
+*** Examples
+    @code go
+    myMap = map[string]int{}
+    someMap := make(map[string]int)
 
-       // assign values
-       myMap["Jake"] = 32 // map[string]int{"Jake": 32}
+    // assign values
+    myMap["Jake"] = 32 // map[string]int{"Jake": 32}
 
-       // delete an element from the map
-       delete(myMap, "Jake")
+    // delete an element from the map
+    delete(myMap, "Jake")
 
-       // check if an element exists in the map
-       v, ok := myMap["Jake"] // ok = false
-       @end
+    // check if an element exists in the map
+    v, ok := myMap["Jake"] // ok = false
+    @end
 
 ** Structs
    - Structs are a collection of values of different types.
@@ -737,42 +737,42 @@ version: 0.0.11
    - Stucts can be composed by embedding other structs. The fields of embedded structs are promoted to the parent struct (This is similar to inheritance in other programming languages).
 
 *** Examples
-   @code go
-   type Person struct {
-     name string
-     age int
-   }
+    @code go
+    type Person struct {
+      name string
+      age int
+    }
 
-   p := Person{name: "John", age: 32}
-   fmt.Println(p)
-   fmt.Println(p.name, p.age) // access struct fields with dot operator
+    p := Person{name: "John", age: 32}
+    fmt.Println(p)
+    fmt.Println(p.name, p.age) // access struct fields with dot operator
 
-   // Anonymous struct
-   person := struct {
-     name string
-     age int
-   }{
-     name: "John",
-     age: 32,
-   }
+    // Anonymous struct
+    person := struct {
+      name string
+      age int
+    }{
+      name: "John",
+      age: 32,
+    }
 
-   // Composition - embedded structs
-   type Employee struct {
-     Person
-     title string
-   }
+    // Composition - embedded structs
+    type Employee struct {
+      Person
+      title string
+    }
 
-   emp := Employee{
-     Person: p
-     title: "Software Engineer",
-   }
+    emp := Employee{
+      Person: p
+      title: "Software Engineer",
+    }
 
-   /* Embedded struct fields / functions are promoted to the enclosing struct.
-    * Accessing Person fields directly from Employee.
-    */
-   fmt.Println("Employee:", emp.name, emp.age, emp.title) // Employee: John 32 Software Engineer
+    /* Embedded struct fields / functions are promoted to the enclosing struct.
+* Accessing Person fields directly from Employee.
+*/
+    fmt.Println("Employee:", emp.name, emp.age, emp.title) // Employee: John 32 Software Engineer
 
-   @end
+    @end
 
 * Generic Types
   - Generic types allow to write code that can work with any type.
@@ -800,18 +800,18 @@ version: 0.0.11
    - By convention, use the builtin `constraints` package for various pre-defined constraint types (Complex, Integer, Float, Ordered, Signed, Unsigned). Read more about the {https://pkg.go.dev/golang.org/x/exp/constraints}[constraints package].
 
 *** Examples**
-   @code go
-   // An alias of int type
-   type BigInt int
+    @code go
+    // An alias of int type
+    type BigInt int
 
-   // An alias of float64
-   type BigFloat float64
+    // An alias of float64
+    type BigFloat float64
 
-   // nyNum interface accepts any of the types: int, float64, BigInt, BigFloat
-   type myNum interface {
-     ~int | ~float64
-   }
-   @end
+    // nyNum interface accepts any of the types: int, float64, BigInt, BigFloat
+    type myNum interface {
+      ~int | ~float64
+    }
+    @end
 
 * Operators
 ** Logical Operators
@@ -863,7 +863,7 @@ version: 0.0.11
     if i := 0; i < 5 {
       fmt.Println("less than 5")
     }
-   @end
+    @end
 
 *** Switch
 
@@ -877,7 +877,7 @@ version: 0.0.11
       fmt.Println("one")
     default:
       fmt.Println("other")
-    }
+  }
 
     switch {
     case x < 42:
@@ -888,38 +888,38 @@ version: 0.0.11
       fmt.Println("greater than 42")
     default:
       fmt.Println("other")
-    }
+  }
     @end
 
 ** Loops
    Unlike most other languages, in go `for` keyword is used for all types of loops.
    @code go
    // Like a C for
-    for i := 0; i < 5; i++ {
-      fmt.Println(i)
-    }
+   for i := 0; i < 5; i++ {
+     fmt.Println(i)
+   }
 
-    // Like a C while
-    for true { }
+   // Like a C while
+   for true { }
 
    // Like a C for(;;) - use 'break' to exit
-    for { }
+   for { }
 
-    // range loop
-    for key, value := range myMap {
-      fmt.Println(key, value)
-    }
+   // range loop
+   for key, value := range myMap {
+     fmt.Println(key, value)
+   }
 
-    // multi-variable for loop - Reverse 'a'
-    for i, j := 0, len(a)-1; i < j; i, j = i+1, j-1 {
-      a[i], a[j] = a[j], a[i]
-    }
+   // multi-variable for loop - Reverse 'a'
+   for i, j := 0, len(a)-1; i < j; i, j = i+1, j-1 {
+     a[i], a[j] = a[j], a[i]
+   }
    @end
 
 ** Functions
 *** Syntax
     @code text
-   func (receiver) identifier(parameters) (returns) { body }
+    func (receiver) identifier(parameters) (returns) { body }
     @end
 *** Examples
     @code go
@@ -953,20 +953,20 @@ version: 0.0.11
      func(parameters) (returns) { body }(arguments)
      @end
 
-    - Similar to javascript anonymous functions can be used as 'Immediately executed function expressions'
+     - Similar to javascript anonymous functions can be used as 'Immediately executed function expressions'
 
 **** Examples
-    @code go
-    // Anonymous functions
-    func(x, y int) int {
-      return x + y
-    }
+     @code go
+     // Anonymous functions
+     func(x, y int) int {
+       return x + y
+     }
 
-    // Anonymous functions inline call
-    func(s string) {
-      fmt.Println("Hello", s)
-    }(" World!")
-    @end
+     // Anonymous functions inline call
+     func(s string) {
+       fmt.Println("Hello", s)
+     }(" World!")
+     @end
 **** Function Expressions
      - Similar to other languages, functions can be assigned to variables or passed around as arguments to other functions.
      - Anonymous functions can be returned as a value.
@@ -1014,36 +1014,36 @@ version: 0.0.11
 *** Parameters
     - Similar to {*** combined variable declaration}, parameter types can be combined *if the parameters share the same type*, in such a case, the type of the last parameter applies to parameters before it. Compare the two equivalent examples below.
 
-   @code go
-   // `int` type applies to both parameters
-   func add(a, b int) int {
-     reutrn a + b
-   }
-   // Same as above
-   func add(a int, b int) int {
-     reutrn a + b
-   }
+    @code go
+    // `int` type applies to both parameters
+    func add(a, b int) int {
+      reutrn a + b
+    }
+    // Same as above
+    func add(a int, b int) int {
+      reutrn a + b
+    }
 
-   @end
+    @end
 
 *** Return values
-   - Functions can return multiple values:
+    - Functions can return multiple values:
 
-   @code go
-   func swap(x, y int) (int, int) {
-     return y, x
-   }
-   @end
+    @code go
+    func swap(x, y int) (int, int) {
+      return y, x
+    }
+    @end
 
 **** Named Returns
 
-    @code go
-    func split(sum int) (x, y int) {
-      x = sum * 4 / 9
-      y = sum - x
-      return
-    }
-    @end
+     @code go
+     func split(sum int) (x, y int) {
+       x = sum * 4 / 9
+       y = sum - x
+       return
+     }
+     @end
 
 *** Deferred Function Calls
     - Functions calls can be deferred with `defer` keyword.
@@ -1084,15 +1084,15 @@ version: 0.0.11
     }
 
     /*
-    prints
+prints
 
-    entering: b
-    in b
-    entering: a
-    in a
-    leaving: a
-    leaving: b
-    */
+entering: b
+in b
+entering: a
+in a
+leaving: a
+leaving: b
+*/
     @end
     Source: {https://go.dev/doc/effective_go#defer}[Effective Go: defer]
 
@@ -1100,20 +1100,20 @@ version: 0.0.11
    - Methods are functions attached to a type through the 'receiver' parameter before function name.
 
 *** Syntax
-   @code text
+    @code text
     func (someType) methodName(parameterList) (returnList)
-   @end
+    @end
 
 *** Examples
-   @code go
-   type person struct {
-     name string
-     age  int
-   }
+    @code go
+    type person struct {
+      name string
+      age  int
+    }
 
-   func (p person) toString() string {
-     return fmt.Sprintf("%v (%v years)", p.name, p.age)
-   }
+    func (p person) toString() string {
+      return fmt.Sprintf("%v (%v years)", p.name, p.age)
+    }
     @end
 
 * Interfaces
@@ -1240,42 +1240,42 @@ version: 0.0.11
    - `bytes` package in the standard library provides functions for working with byte slices and byte buffers.
 
 *** Examples
-   @code go
-   type person struct {
-     first string
-     last string
-   }
+    @code go
+    type person struct {
+      first string
+      last string
+    }
 
-   func (p person) writeOut(w io.Writer) error {
-     _, err := w.Write([]byte(p.first))
-     return err
-   }
+    func (p person) writeOut(w io.Writer) error {
+      _, err := w.Write([]byte(p.first))
+      return err
+    }
 
-   func main() {
-     b := bytes.NewBufferString("Hello")
-     fmt.Println(b.String()) // Hello
-     b.WriteString(" World!")
-     fmt.Println(b.String())  // Hello World!
-     b.reset()
-     b.WriteString("Wow!")
-     fmt.Println(b.String())  // Wow!
-     b.Write([]byte(" Cool!"))
-     fmt.Println(b.String())  // Wow! Cool!
+    func main() {
+      b := bytes.NewBufferString("Hello")
+      fmt.Println(b.String()) // Hello
+      b.WriteString(" World!")
+      fmt.Println(b.String())  // Hello World!
+      b.reset()
+      b.WriteString("Wow!")
+      fmt.Println(b.String())  // Wow!
+      b.Write([]byte(" Cool!"))
+      fmt.Println(b.String())  // Wow! Cool!
 
-     // Write buffer to a file using the io.Writer interface
-     f, _ := os.Create("test.txt")
-     if err != nil {
-       log.Fatalf("error %s", err)
-     }
-     defer f.close()
+      // Write buffer to a file using the io.Writer interface
+      f, _ := os.Create("test.txt")
+      if err != nil {
+        log.Fatalf("error %s", err)
+      }
+      defer f.close()
 
-     p := person{first: "Morgan", last: "freeman"}
+      p := person{first: "Morgan", last: "freeman"}
 
-     var b bytes.Buffer
-     p.writeOut(f)  // check and handle errors
-     p.writeOut(&b) // check and handle errors
-     fmt.Println(b.String())
-   }
+      var b bytes.Buffer
+      p.writeOut(f)  // check and handle errors
+      p.writeOut(&b) // check and handle errors
+      fmt.Println(b.String())
+    }
     @end
 
 ** Sorting
@@ -1373,37 +1373,37 @@ version: 0.0.11
    - *Tip:* Use {https://mholt.github.io/json-to-go/}[json-to-go] to convert JSON to Go structs.
 
 *** Example
-   @code go
-   package main
+    @code go
+    package main
 
-   import (
-     "encoding/json"
-     "fmt"
-   )
+    import (
+      "encoding/json"
+      "fmt"
+    )
 
-   type person struct {
-     first string
-     last  string
-   }
+    type person struct {
+      first string
+      last  string
+    }
 
-   func main() {
-     p := person{first: "Morgan", last: "Freeman"}
-     b, _ := json.Marshal(p)
-     fmt.Println(string(b))
+    func main() {
+      p := person{first: "Morgan", last: "Freeman"}
+      b, _ := json.Marshal(p)
+      fmt.Println(string(b))
 
-     // Marshalling JSON
-     person_json, err := json.Marshal(person)
-     if err != nil {
-       log.Fatalf("Error marshalling person: %s", err)
-     }
-     fmt.Println(string(person_json))
+      // Marshalling JSON
+      person_json, err := json.Marshal(person)
+      if err != nil {
+        log.Fatalf("Error marshalling person: %s", err)
+      }
+      fmt.Println(string(person_json))
 
-     // Unmarshalling JSON
-     var p1 person
-     // without string literals: "{\"first\": "Morgan", \"last\": \"Freeman\"}"
-     json.Unmarshal([]byte(`{"first": "Morgan", "last": "Freeman"}`), &p1)
-     fmt.Println(p1)
-   }
+      // Unmarshalling JSON
+      var p1 person
+      // without string literals: "{\"first\": "Morgan", \"last\": \"Freeman\"}"
+      json.Unmarshal([]byte(`{"first": "Morgan", "last": "Freeman"}`), &p1)
+      fmt.Println(p1)
+    }
     @end
 
 ** Print Runtime System Information
@@ -1425,13 +1425,13 @@ version: 0.0.11
       fmt.Println("Version:", runtime.Version())
 
       /* Example output
-        OS: linux
-        ARCH: amd64
-        CPUs: 8
-        Goroutines: 1
-        GOMAXPROCS: 8
-        Version: go1.21.4
-      */
+OS: linux
+ARCH: amd64
+CPUs: 8
+Goroutines: 1
+GOMAXPROCS: 8
+Version: go1.21.4
+*/
     }
     @end
 
