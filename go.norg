@@ -18,8 +18,7 @@ version: 0.0.1
   *The document structure is not organized in any particular order.*
 
 * Introduction
-  Go is a compiled language.
-  You can send the executables to other persons and they can execute it without the need to have Go installed.
+  Go is a compiled language. The key highlights of the language are: ease of use, modern concurrency features and performance.
 
   Checkout {https://go.dev/tour/list}[A tour of Go]
 
