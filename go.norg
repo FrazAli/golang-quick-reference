@@ -403,6 +403,13 @@ version: 0.0.11
 
    - Go installs binaries in `GOPATH/bin`.
 
+** Format
+   - Format a go file with `go fmt` command.
+   - The `go fmt` command is an alias to `gofmt -w -l`.
+   @code bash
+   go fmt main.go
+   @end
+
 
 * Comments
   Single line comments start with `//` at the beginning of a line. Multi-line comments are started with `/*` and ended with `*/`.
