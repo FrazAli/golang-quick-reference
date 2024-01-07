@@ -1618,6 +1618,14 @@ version: 0.0.11
     }
     @end
 
+
+** Coverage
+   - For test coverage, use -cover: `go test -cover`
+   - To generate coverage report, use -coverprofile: `go test -coverprofile=coverage.out`
+   - To display coverage report, use `go tool cover -html=coverage.out`
+   -- /This will generate an HTML report in `coverage.html`, with covered lines in green and uncovered lines in red./
+   - Learn more `go tool cover -h`
+
     package main
 
     import (
