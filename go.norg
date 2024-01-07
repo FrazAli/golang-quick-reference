@@ -1427,7 +1427,7 @@ version: 0.0.11
    - Test functions must start with `Test` followed by the function name that should start with a capital letter. e.g. `func TestSomeFunction(t *testing.T)`
 
 *** Examples
-    - Basic unit test
+**** Basic unit test
     @code go
     // main.go
     package main
@@ -1448,7 +1448,7 @@ version: 0.0.11
       }
     }
     @end
-    - Unit test example with mocked database using interface
+**** Unit test example with mocked database using interface
     @code go
     package main
 
@@ -1535,7 +1535,7 @@ version: 0.0.11
       fmt.Println(u1Returned)
     }
     @end
-    - The test file
+    The test file
     @code go
     package main
 
