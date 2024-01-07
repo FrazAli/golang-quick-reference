@@ -24,6 +24,8 @@ version: 0.0.1
 * Introduction
   Go is a compiled language. The key highlights of the language are: ease of use, modern concurrency features and performance.
 
+  Checkout the {https://go-proverbs.github.io/}[Go Proverbs]
+
   Checkout {https://go.dev/tour/list}[A tour of Go]
 
   Learn more about Go {https://go.dev/ref/spec#Program_initialization_and_execution}[program initialization and execution].
