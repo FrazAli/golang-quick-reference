@@ -1661,9 +1661,9 @@ version: 0.0.11
 ** The `go doc` command
    - Read the help doc: `go doc -help`
    - You can access documentation with `go doc` in the terminal.
-    @code bash
-    go doc fmt  # Display documentation of the 'fmt' package
-    @end
+   @code bash
+   go doc fmt  # Display documentation of the 'fmt' package
+   @end
    - You can view the documentation of your current package with `go doc` in the package root directory.
 
 ** Useful Links
@@ -1671,14 +1671,14 @@ version: 0.0.11
    - {https://go.dev/doc}[go.dev/doc] - Short tutorials and documentation for standard library packages.
 ** Package Documentation
 *** Generation
-   - Documentation for a package is generated with `godoc` command (`godoc` is not the same as `go doc`) in the terminal, the inline code comments are the main source of documentation in this case. See {*** Comment Syntax} for more details.
-   -- Install `godoc` package with `go install golang.org/x/tools/cmd/godoc@latest`
-   -- A local documentation server can be started with `godoc -http=:8080`
+    - Documentation for a package is generated with `godoc` command (`godoc` is not the same as `go doc`) in the terminal, the inline code comments are the main source of documentation in this case. See {*** Comment Syntax} for more details.
+    -- Install `godoc` package with `go install golang.org/x/tools/cmd/godoc@latest`
+    -- A local documentation server can be started with `godoc -http=:8080`
 *** Comment Recommendations
     - Do not use URLs in comments, instead, include reference to any README that may include links / URLs
     - Use short and clear sentences over long lines.
     - Comments should provide context to the code that is not clear from the code itself.
-   - For detailed documentation, use a separate file `doc.go` in the package root.
+    - For detailed documentation, use a separate file `doc.go` in the package root.
     -- For example, `doc.go` file for the `fmt` package can be found at: {https://cs.opensource.google/go/go/+/refs/tags/go1.21.5:src/fmt/doc.go}[`fmt/doc.go`]
 
 *** Comment Syntax
