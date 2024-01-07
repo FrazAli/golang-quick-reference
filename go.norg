@@ -2,8 +2,12 @@
 title: Go Programming Language
 description: A quick reference for Go programming language.
 authors: Fraz Ali <frazaliqureshi@gmail.com>
-categories:
+categories: [
+  Go
+  Programming
+]
 created: 2023-12-16
+updated: 2024-01-07
 version: 0.0.1
 @end
 
