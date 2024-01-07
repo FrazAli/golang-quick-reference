@@ -1591,10 +1591,33 @@ version: 0.0.11
      }
      @end
 
+** Example Tests
+   - Read more about example tests: {https://go.dev/blog/examples}
+   - Unit tests can also be written in a way that they can be used as documentation examples.
+   - The examples on godoc.org are written as example tests.
+   - Example test names start with `Example`.
+   - Example tests use the print functions together with comments to indicate expected output.
+   - Example tests can be run similar to other unit tests, in addition the Example tests automatically show up as Examples on the generated HTML documentation.
+
+*** Example
+    @code go
+    // main.go
+    package main
+
+    func Add(x, y int) int {
+      return x + y
     }
     @end
-    The test file
     @code go
+    // main_test.go
+    import "fmt"
+
+    func ExampleAdd(t *testing.T) {
+      fmt.Println(Add(1, 2))
+      // Output: 3
+    }
+    @end
+
     package main
 
     import (
