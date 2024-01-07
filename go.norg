@@ -1436,6 +1436,17 @@ version: 0.0.11
     @end
 
 * Testing
+  - *Tip:* Remember to BET i.e. Benchmark, Example and Test the code.
+  - Quick command reference:
+  @code bash
+  go test
+  go test -bench .
+  go test -bench . -benchmem
+  go test -cover
+  go test -coverprofile coverage.out
+  go tool cover -html=coverage.out
+  @end
+
 ** Unit tests
    A unit test is a function that tests a single function, method, or struct.
    - Test file names must end with `_test.go`
