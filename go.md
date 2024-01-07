@@ -30,7 +30,7 @@ func main() {
 
 ## The 'init' function
 
-The `init` function in Go allows to run code before the `main()` function.
+The `init()` function in Go allows to run code before the `main()` function.
 
 ```go
 import "fmt"
@@ -48,8 +48,8 @@ Here is a brief overview of concurrency features in Go language. To learn more a
 
 ## Goroutines
 
-- A `goroutine` is a lightweight thread.
-- A `goroutine` can be started with `go` keyword.
+- A goroutine is a lightweight thread.
+- A goroutine can be started with `go` keyword.
 
 ```go
 // Example 1
@@ -63,8 +63,8 @@ go list.Sort()  // run list.Sort concurrently; don't wait for it.
 
 ## Channels
 
-- Channels are the preferred way to communicate between goroutines.
-- Like maps, channels are created with `make` keyword.
+- Channels are the preferred way to communicate/synchronize between goroutines.
+- Channels can be created with `make` keyword.
 - By default channels are bidirectional (`chan` keyword), but can be declared as unidirectional e.g. A send only unidirectional channel: `chan <- int`
 
 ```go
