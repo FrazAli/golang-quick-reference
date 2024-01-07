@@ -410,6 +410,15 @@ version: 0.0.11
    go fmt main.go
    @end
 
+** Lint
+   - -Read more about the `golint` tool on the official github repo.- : {go get -u golang.org/x/lint/golint}
+   - The `golint` tool is deprecated, instead, use `go vet` or use {https://staticcheck.dev/docs/getting-started/}[`staticcheck`] tool.
+   - Install the `staticcheck` tool with `go install honnef.co/go/tools/cmd/staticcheck@latest`
+   - Lint a go file with `staticcheck` command.
+   @code bash
+   staticcheck main.go
+   @end
+
 
 * Comments
   Single line comments start with `//` at the beginning of a line. Multi-line comments are started with `/*` and ended with `*/`.
